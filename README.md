@@ -1,1 +1,2 @@
-# le-lavoir
+# Le lavoir Landing Page Template
+
