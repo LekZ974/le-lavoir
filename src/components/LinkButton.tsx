@@ -23,7 +23,7 @@ type Props =
   | (LinkProps & { button?: undefined })
   | (ButtonProps & { button: true });
 
-export const LinkButton = (props: Props) => {
+export const LinkButton = (props: Props & { onClick?: () => void }) => {
   const { button, className = '', ...htmlProps } = props;
   const [isClient, setIsClient] = useState(false);
 
@@ -48,6 +48,7 @@ export const LinkButton = (props: Props) => {
   if (button) {
     return (
       <button
+        onClick={props.onClick}
         type="button"
         {...(htmlProps as ButtonProps)}
         className={twMerge(
@@ -61,6 +62,7 @@ export const LinkButton = (props: Props) => {
 
   return (
     <a
+      onClick={props.onClick}
       {...(htmlProps as LinkProps)}
       className={twMerge(
         baseClass,
