@@ -1,7 +1,7 @@
 {
   "hero.title": "Le linge propre",
   "hero.subtitle": "le lien en plus",
-  "hero.text": "Ici, on lave son linge, mais on tisse aussi du lien. Un sourire, un bonjour, une discussion autour d’un café : la passerelle, c’est aussi entre les gens qu’elle se tend. Le Lavoir de la Passerelle se positionne comme un lieu du quotidien, accessible, accueillant et engagé localement. Plus qu’un service, c’est un point de rencontre, un moment pour soi ou pour échanger, au cœur de la ville de Saint-Joseph.",
+  "hero.text": "Ici, on lave son linge, mais on tisse aussi du lien. Un sourire, un bonjour, une discussion spontanée : la passerelle, c’est aussi celle qui relie les gens.\nLe Lavoir de la Passerelle se veut un lieu du quotidien, propre, accueillant et accessible à tous.",
 
   "services.title": "Nos services",
   "services.subtitle": "Pensés pour vous",
@@ -58,5 +58,17 @@
   "testimonial.feedback2": "On utilise souvent le Lavoir de la Passerelle pour laver les draps et serviettes de notre association. Le grand tambour de 20 kg est parfait ! L’endroit est pratique, fonctionnel et très bien entretenu.",
   "testimonial.feedback3": "Franchement, un vrai soulagement ! Avec deux petits à la maison, je fais de grosses lessives toutes les semaines. Les machines sont super faciles à utiliser, et en plus c’est propre, rapide, et pas cher. On sent que c’est pensé pour les familles. J’en profite même pour bouquiner pendant le séchage.",
 
-  "social.follow_us": "Suivez-nous sur les réseaux sociaux"
+  "social.follow_us": "Suivez-nous sur les réseaux sociaux",
+
+  "common.modal.close": "Fermer",
+  "common.modal.send": "Envoyer",
+  "common.modal.name": "Nom",
+  "common.modal.email": "Email",
+  "common.modal.message": "Message",
+  "common.modal.sending": "Envois en cours...",
+  "common.modal.error": "Oupss... Une erreur est survenue.",
+  "common.modal.error.name": "Renseignez votre nom.",
+  "common.modal.error.email": "Renseignez votre email.",
+  "common.modal.error.message": "Laissez nous un message.",
+  "common.modal.success": "Merci de nous avoir contacté !"
 }

@@ -58,5 +58,17 @@
   "testimonial.feedback2": "We often use Le Lavoir de la Passerelle to wash our association’s sheets and towels. The 20 kg drum is perfect! The place is convenient, functional, and very well maintained.",
   "testimonial.feedback3": "Honestly, such a relief! With two young kids, I do big loads of laundry every week. The machines are super easy to use, and it’s clean, fast, and affordable. You can tell it’s made with families in mind. I even get to read a book while the laundry dries.",
 
-  "social.follow_us": "Follow us on social media"
+  "social.follow_us": "Follow us on social media",
+
+  "common.modal.close": "Close",
+  "common.modal.send": "Send",
+  "common.modal.name": "Name",
+  "common.modal.email": "Email",
+  "common.modal.message": "Message",
+  "common.modal.sending": "Sending...",
+  "common.modal.error": "Oupss... An error has occurred.",
+  "common.modal.error.name": "Your name is required.",
+  "common.modal.error.email": "Your email is required.",
+  "common.modal.error.message": "A message is required.",
+  "common.modal.success": "Thank you for your message!"
 }

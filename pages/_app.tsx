@@ -7,6 +7,7 @@ import Head from 'next/head';
 import { NextSeo } from 'next-seo';
 import { useEffect } from 'react';
 import { useDarkMode, useEffectOnce } from 'usehooks-ts';
+import SoonPage from '../src/components/SoonPage';
 
 import i18n from '../src/i18n';
 
@@ -62,6 +63,21 @@ const jsonLd = {
 
 const App = ({ Component, pageProps }: AppProps) => {
   const { isDarkMode, toggle: toggleDarkMode } = useDarkMode();
+  const isMaintenanceMode = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === 'true';
+
+  if (isMaintenanceMode) {
+    return (
+      <>
+        <Head>
+          <meta charSet="UTF-8"/>
+          <meta name="viewport" content="width=device-width, initial-scale=1"/>
+          <title>Le Lavoir de la Passerelle - Bientôt disponible</title>
+          <meta name="robots" content="index, follow" />
+        </Head>
+        <SoonPage />
+      </>
+    );
+  }
 
   useEffect(() => {
     if (isDarkMode) {

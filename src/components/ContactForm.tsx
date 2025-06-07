@@ -1,4 +1,5 @@
-import React, { useState, FormEvent } from 'react';
+import React, { FormEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface FormData {
   name: string;
@@ -7,10 +8,11 @@ interface FormData {
 }
 
 export const ContactForm: React.FC = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
-    message: '',
+    message: ''
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -20,7 +22,7 @@ export const ContactForm: React.FC = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
-      [event.target.name]: event.target.value,
+      [event.target.name]: event.target.value
     });
   };
 
@@ -29,15 +31,15 @@ export const ContactForm: React.FC = () => {
     let isValid = true;
 
     if (formData.name.trim() === '') {
-      tempErrors.name = 'Name is required';
+      tempErrors.name = t('common.modal.error.name');
       isValid = false;
     }
     if (formData.email.trim() === '') {
-      tempErrors.email = 'Email is required';
+      tempErrors.email = t('common.modal.error.email');
       isValid = false;
     }
     if (formData.message.trim() === '') {
-      tempErrors.message = 'Message is required';
+      tempErrors.message = t('common.modal.error.message');
       isValid = false;
     }
 
@@ -48,41 +50,43 @@ export const ContactForm: React.FC = () => {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (validateForm()) {
-        setIsSubmitting(true);
-        try {
-            const response = await fetch('/api/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
+      setIsSubmitting(true);
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
 
-            if (response.ok && response.status === 200) {
-                setIsSuccess(true);
-                setFormData({name: '', email: '', message: ''});
-                setErrors({});
-            } else {
-                const data = await response.json()
-                throw new Error(data.error || 'Failed to send email');
-            }
-        } catch (error) {
-            console.error('Error sending email:', error);
-            setErrorMessage(error.message)
-        } finally {
-            setIsSubmitting(false);
+        if (response.ok && response.status === 200) {
+          setIsSuccess(true);
+          setFormData({ name: '', email: '', message: '' });
+          setErrors({});
+        } else {
+          const data = await response.json();
+          throw new Error(data.error || 'Failed to send email');
         }
+      } catch (error: any) {
+        console.error('Error sending email:', error);
+        setErrorMessage(error.message);
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
-  if(errorMessage) return <div className="text-red-500">{errorMessage}</div>
+  if (errorMessage) {
+    return <div className="text-neon-amber">{errorMessage}</div>;
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {isSuccess && <div className="text-green-500">Thank you for contacting us!</div>}
+      {isSuccess && <div className="text-gray-100">{t('common.modal.success')}</div>}
       <div>
-        <label htmlFor="name" className="block">
-          Name:
+        <label htmlFor="name" className="block text-extra-strong">
+          {t('common.modal.name')}
         </label>
         <input
           type="text"
@@ -90,14 +94,14 @@ export const ContactForm: React.FC = () => {
           name="name"
           value={formData.name}
           onChange={handleChange}
-          placeholder=''
+          placeholder=""
           className="border border-gray-300 p-2 w-full"
         />
-        {errors.name && <div className="text-red-500">{errors.name}</div>}
+        {errors.name && <div className="text-neon-amber">{errors.name}</div>}
       </div>
       <div>
-        <label htmlFor="email" className="block">
-          Email:
+        <label htmlFor="email" className="block text-extra-strong">
+          {t('common.modal.email')}
         </label>
         <input
           type="email"
@@ -105,31 +109,31 @@ export const ContactForm: React.FC = () => {
           name="email"
           value={formData.email}
           onChange={handleChange}
-          placeholder=''
+          placeholder=""
           className="border border-gray-300 p-2 w-full"
         />
-        {errors.email && <div className="text-red-500">{errors.email}</div>}
+        {errors.email && <div className="text-neon-amber">{errors.email}</div>}
       </div>
       <div>
-        <label htmlFor="message" className="block">
-          Message:
+        <label htmlFor="message" className="block text-extra-strong">
+          {t('common.modal.message')}
         </label>
         <textarea
           id="message"
           name="message"
           value={formData.message}
           onChange={handleChange}
-          placeholder=''
+          placeholder=""
           className="border border-gray-300 p-2 w-full"
         />
-        {errors.message && <div className="text-red-500">{errors.message}</div>}
+        {errors.message && <div className="text-neon-amber">{errors.message}</div>}
       </div>
       <button
         type="submit"
         disabled={isSubmitting}
-        className="bg-blue-500 text-white p-2 rounded"
+        className="bg-blue-500 text-extra-strong p-2 rounded"
       >
-        {isSubmitting ? 'Sending...' : 'Send'}
+        {isSubmitting ? t('common.modal.sending') : t('common.modal.send')}
       </button>
     </form>
   );

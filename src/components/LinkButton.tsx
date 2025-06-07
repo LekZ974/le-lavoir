@@ -40,7 +40,6 @@ export const LinkButton = (props: Props & { onClick?: () => void }) => {
         className={twMerge(baseClass, 'text-extra-light', className)}
         aria-hidden="true"
       >
-        {/* placeholder ou vide volontaire */}
       </a>
     );
   }

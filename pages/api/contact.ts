@@ -19,6 +19,7 @@ export default async function handler(
   if (req.method === 'POST') {
     const { name, email, message } = req.body as ContactFormData;
 
+    console.log(name, email, message, process.env.MAILGUN_API_KEY)
     if (!name || !email || !message) {
       return res.status(400).json({ message: 'Missing fields' });
     }
@@ -26,11 +27,12 @@ export default async function handler(
     const mailgun = new Mailgun(formData);
     const mg = mailgun.client({
       username: 'api',
-      key: process.env.MAILGUN_API_KEY || '',
+      key: process.env.MAILGUN_API_KEY ?? '',
+      url: "https://api.eu.mailgun.net"
     });
 
     const messageData = {
-      from: `Mailgun Sandbox <${process.env.MAILGUN_DOMAIN}>`,
+      from: `Le Lavoir de la Passerelle contact@lelavoir.re`,
       to: 'contact@lelavoir.re',
       subject: `New Contact Form Submission from ${name}`,
       text: `
@@ -41,7 +43,7 @@ export default async function handler(
     };
 
     try {
-      await mg.messages.create(process.env.MAILGUN_DOMAIN || '', messageData);
+      await mg.messages.create(process.env.MAILGUN_DOMAIN ?? '', messageData);
       res.status(200).json({ message: 'Email sent successfully' });
     } catch (error) {
       console.error(error);
