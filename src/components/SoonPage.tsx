@@ -1,8 +1,11 @@
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { useState } from 'react';
+import { Header } from '../sections';
 import CardLinks from './CardLinks';
+import { Logo } from './Logo';
 
 const TwitterIcon = () => (
   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -29,14 +32,23 @@ export default function SoonPage() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-extra-strong text-white p-6 font-sans">
       <div className="text-center space-y-8 max-w-2xl w-full">
-        <header className={'justify-items-center w-full'}>
-          <div style={{width: 300, height: 300}} className=" rounded-full justify-items-center content-center bg-gray-50">
-            <Image src="/images/logo.png" width={200} height={200} alt="Logo"/>
-          </div>
-        </header>
+        <div className={'flex justify-center'}>
+          <Link href="/">
+            <div className="relative justify-self-center flex items-center justify-center w-[100px] h-[100px]">
+              <div className="absolute inset-0 bg-strong rounded-full opacity-100" style={{ zIndex: 1 }}/>
+              <Image
+                src="/images/logo.png"
+                alt="Logo"
+                width={80}
+                height={80}
+                className="relative z-10"
+              />
+            </div>
+          </Link>
+        </div>
         <section>
           <h1
-            className="text-4xl md:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-pink-500 pb-2">
+            className="text-4xl md:text-6xl font-extrabold tracking-tight bg-clip-text text-extra-light bg-gradient-to-r from-indigo-400 to-pink-500 pb-2">
             On arrive bientôt.
           </h1>
           <video

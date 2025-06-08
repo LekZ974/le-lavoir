@@ -65,7 +65,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   const { isDarkMode, toggle: toggleDarkMode } = useDarkMode();
   const isMaintenanceMode = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === 'true';
 
-  if (isMaintenanceMode) {
+  if (!isMaintenanceMode) {
     return (
       <>
         <Head>

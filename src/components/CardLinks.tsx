@@ -31,10 +31,6 @@ export const CardLinks: React.FC = () => {
       <div className="items-center gap-6 text-center md:text-left col ">
         <GradientText className="pure-stream">{t('social.follow_us')}</GradientText>
         <div className="flex gap-4 items-center justify-center md:justify-start">
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
-             className="flex gap-4 items-center">
-            <TwitterIcon className="w-6 h-6"/>
-          </a>
           <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
              className="flex gap-4 items-center">
             <InstagramIcon className="w-6 h-6"/>
