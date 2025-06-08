@@ -1,11 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-
-import { useState } from 'react';
-import { Header } from '../sections';
 import CardLinks from './CardLinks';
-import { Logo } from './Logo';
 
 const TwitterIcon = () => (
   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
