@@ -5,7 +5,7 @@ import { Section } from '../components/Section';
 
 export const SocialLinks: React.FC = () => {
   return (
-    <Section animation={false} gradients fullWidth className="px-4 dark sm:px-12">
+    <Section animation={false} gradients fullWidth className="px-4 sm:px-12">
       <AnimateOnScroll animation={'fromDown'}>
         <CardLinks/>
       </AnimateOnScroll>

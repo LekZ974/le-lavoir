@@ -24,7 +24,7 @@ export const Hero = () => {
         <Title size="extra-lg" className="text-extra-strong">
           {t('hero.title')}
         </Title>
-        <GradientText className="pure-stream">{t('hero.subtitle')}</GradientText>
+        <GradientText>{t('hero.subtitle')}</GradientText>
         <Details className="text-extra-light">
           {t('hero.text')}
         </Details>

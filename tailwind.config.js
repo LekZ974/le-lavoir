@@ -39,8 +39,18 @@ module.exports = {
       },
     },
     extend: {
+      colors: {
+        brandOrange: '#e2541b',
+        brandDarkBlue: '#2A3B5C',
+        brandLightBlue: '#4CB9E0',
+        brandWhite: '#FFFFFF',
+        brandYellow: '#FBC02D',
+      },
       fontFamily: {
         sans: ["Avenir Next", "Helvetica Neue", "sans-serif"],
+      },
+      scale: {
+        '200': '2',
       },
     },
   },

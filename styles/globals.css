@@ -1,6 +1,14 @@
 /* Import Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Montserrat:wght@700&display=swap');
 
+:root {
+  --brand-orange: #e2541b;
+  --brand-dark-blue: #2A3B5C;
+  --brand-light-blue: #4CB9E0;
+  --brand-white: #FFFFFF;
+  --brand-yellow: #FBC02D;
+}
+
 body {
     font-family: 'Nunito', sans-serif;
 }
@@ -28,7 +36,8 @@ h1, h2, h3, h4, h5, h6 {
 
     /* Gradients */
     .pure-stream {
-        @apply from-[#55C2E8] to-[#EDF3F7];
+        @apply from-neon-red1 to-neon-red2;
+        @apply dark:from-[#55C2E8] to-[#EDF3F7];
     }
 
     .river-fire {
@@ -79,58 +88,59 @@ h1, h2, h3, h4, h5, h6 {
 
     /* Responsive colors */
     .bg-extra-strong {
-        @apply bg-[#E2541B];
+        @apply bg-[var(--brand-yellow)];
+        @apply dark:bg-[var(--brand-orange)];
     }
 
     .bg-strong {
-        @apply bg-[#EDF3F7];
+        @apply bg-[var(--brand-dark-blue)];
         @apply dark:bg-[#1B3B5A];
     }
 
     .bg-medium {
-        @apply bg-[#55C2E8];
+        @apply bg-[var(--brand-light-blue)];
     }
 
     .bg-light {
-        @apply bg-[#F9B233];
+        @apply bg-[var(--brand-yellow)];
         @apply dark:bg-[#6BBF59];
     }
 
     .bg-extra-light {
-        @apply bg-[#D8E9F1];
+        @apply bg-[var(--brand-white)];
         @apply dark:bg-[#4D5D6C];
     }
 
     .text-extra-strong {
-        @apply text-[#FDF7F2];
+        @apply text-[var(--brand-white)];
         @apply dark:text-[#ffffff];
     }
 
     .text-strong {
-        @apply text-[#1B3B5A];
+        @apply text-[var(--brand-light-blue)];
         @apply dark:text-[#F9B233];
     }
 
     .text-medium {
-        @apply text-[#55C2E8];
+        @apply text-[var(--brand-light-blue)];
         @apply dark:text-[#EDF3F7];
     }
 
     .text-light {
-        @apply text-[#2E4A60];
+        @apply text-[var(--brand-yellow)];
         @apply dark:text-[#D8E9F1];
     }
 
     .text-extra-light {
-        @apply text-[#D8E9F1];
+        @apply text-[var(--brand-white)];
     }
 
     .text-deep-blue {
-        @apply text-[#1B3B5A];
+        @apply text-[var(--brand-dark-blue)];
     }
 
     .text-burnt-orange {
-        @apply text-[#E2541B];
+        @apply text-[var(--brand-orange)];
     }
 
     /* Text sizing */

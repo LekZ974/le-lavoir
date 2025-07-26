@@ -31,9 +31,9 @@ export default function SoonPage() {
         <div className={'flex justify-center'}>
           <Link href="/">
             <div className="relative justify-self-center flex items-center justify-center w-[100px] h-[100px]">
-              <div className="absolute inset-0 bg-strong rounded-full opacity-100" style={{ zIndex: 1 }}/>
+              <div className="absolute inset-0 rounded-full opacity-100" style={{ zIndex: 1 }}/>
               <Image
-                src="/images/logo.png"
+                src="/images/simple-logo.png"
                 alt="Logo"
                 width={80}
                 height={80}
@@ -45,7 +45,8 @@ export default function SoonPage() {
         <section>
           <h1
             className="text-4xl md:text-6xl font-extrabold tracking-tight bg-clip-text text-extra-light bg-gradient-to-r from-indigo-400 to-pink-500 pb-2">
-            On arrive bientôt.
+            Ouverture prochainement...
+            Rendez-vous à la rentrée !
           </h1>
           <video
             className="w-full max-w-lg mx-auto rounded-lg shadow-lg"
