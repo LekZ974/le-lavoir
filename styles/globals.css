@@ -275,9 +275,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .flip-box-back {
-        @apply bg-[#EDF3F7];
-        /* bleu très clair pour fond doux */
-        @apply dark:bg-[#1B3B5A];
+        @apply bg-strong;
         /* bleu foncé en mode sombre */
         transform: rotateY(180deg);
     }

@@ -2,6 +2,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import CardLinks from './CardLinks';
+import { Footer, Hero } from '../sections';
+import { Title } from './Title';
+import { GradientText } from './GradientText';
+import { Details } from './Details';
+import { useTranslation } from 'react-i18next';
+import { Demo } from './Demo';
+import { Section } from './Section';
 
 const TwitterIcon = () => (
   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -25,9 +32,11 @@ const LinkedinIcon = () => (
 );
 
 export default function SoonPage() {
+  const { t } = useTranslation();
+  
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-extra-strong text-white p-6 font-sans">
-      <div className="text-center space-y-8 max-w-2xl w-full">
+    <main>
+      <Section>
         <div className={'flex justify-center'}>
           <Link href="/">
             <div className="relative justify-self-center flex items-center justify-center w-[100px] h-[100px]">
@@ -42,7 +51,6 @@ export default function SoonPage() {
             </div>
           </Link>
         </div>
-        <section>
           <h1
             className="text-4xl md:text-6xl font-extrabold tracking-tight bg-clip-text text-extra-light bg-gradient-to-r from-indigo-400 to-pink-500 pb-2">
             Ouverture prochainement...
@@ -58,11 +66,28 @@ export default function SoonPage() {
             <source src="/videos/soon.mp4" type="video/mp4"/>
             Votre navigateur ne supporte pas la lecture de vidéos.
           </video>
-        </section>
-        <footer className="pt-8">
-          <CardLinks/>
-        </footer>
+        </Section>
+        <Section grayer>
+        <div className="z-10 gap-4 py-28 text-center col md:text-left">
+        <Title size="extra-lg" className="text-extra-strong">
+          {t('hero.title')}
+        </Title>
+        <GradientText>{t('hero.subtitle')}</GradientText>
+        <Details 
+          className="text-extra-light">
+            {t('hero.text')}
+        </Details>
       </div>
+      <Demo
+        className={'md:w-[3000px]'}
+        data-aos="fade-left"
+        alt="localisation de la laverie"
+      />
+        </Section>
+        <Section>
+          <CardLinks/>
+        </Section>
+      <Footer/>
     </main>
   );
 }

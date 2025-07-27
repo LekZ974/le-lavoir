@@ -117,7 +117,7 @@ export const Features = () => {
           <Title size="extra-md">
             {t('pricing.title')}<br/>
           </Title>
-          <GradientText className="pure-stream">{t('pricing.subtitle')}</GradientText>
+          <GradientText>{t('pricing.subtitle')}</GradientText>
           <Details className="text-extra-light">
             {t('pricing.text')}</Details>
         </Text>
@@ -187,7 +187,7 @@ export const Features = () => {
                 />
               </AnimateOnScroll>
             </div>
-            <div className="flip-box-back">
+            <div className="flip-box-back bg-extra-strong">
               <div className="row gap-6 pt-6">
                 <CardFeature className="p-6">
                   <CardFeatureText
@@ -221,7 +221,7 @@ export const Features = () => {
           <Title size="extra-md">
             {t('sustainable.title')}<br/>
           </Title>
-          <GradientText className="pure-stream">{t('sustainable.subtitle')}
+          <GradientText>{t('sustainable.subtitle')}
           </GradientText>
           <Details className="text-extra-light">
             {t('sustainable.text')}

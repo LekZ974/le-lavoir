@@ -65,20 +65,6 @@ const App = ({ Component, pageProps }: AppProps) => {
   const { isDarkMode, toggle: toggleDarkMode } = useDarkMode();
   const isMaintenanceMode = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === 'true';
 
-  if (isMaintenanceMode) {
-    return (
-      <>
-        <Head>
-          <meta charSet="UTF-8"/>
-          <meta name="viewport" content="width=device-width, initial-scale=1"/>
-          <title>Le Lavoir de la Passerelle - Bientôt disponible</title>
-          <meta name="robots" content="index, follow" />
-        </Head>
-        <SoonPage />
-      </>
-    );
-  }
-
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add('dark');
@@ -99,6 +85,20 @@ const App = ({ Component, pageProps }: AppProps) => {
       easing: 'ease-out-cubic'
     });
   });
+
+  if (!isMaintenanceMode) {
+    return (
+      <>
+        <Head>
+          <meta charSet="UTF-8"/>
+          <meta name="viewport" content="width=device-width, initial-scale=1"/>
+          <title>Le Lavoir de la Passerelle - Bientôt disponible</title>
+          <meta name="robots" content="index, follow" />
+        </Head>
+        <SoonPage />
+      </>
+    );
+  }
 
   return (
     <>

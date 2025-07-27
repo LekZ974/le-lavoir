@@ -17,10 +17,10 @@ export const Details = ({
 
   return (
     <p
-      {...props}
       data-aos="zoom-y-out"
       data-aos-delay="150"
       className={twMerge('body-lg text-light', props.className)}
+      {...props}
     >
       {children as string}
     </p>
