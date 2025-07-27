@@ -86,20 +86,6 @@ const App = ({ Component, pageProps }: AppProps) => {
     });
   });
 
-  if (isMaintenanceMode) {
-    return (
-      <>
-        <Head>
-          <meta charSet="UTF-8"/>
-          <meta name="viewport" content="width=device-width, initial-scale=1"/>
-          <title>Le Lavoir de la Passerelle - Bientôt disponible</title>
-          <meta name="robots" content="index, follow" />
-        </Head>
-        <SoonPage />
-      </>
-    );
-  }
-
   return (
     <>
       <Head>
@@ -118,7 +104,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <meta property="og:locale" content="fr_FR"/>
         <link rel="canonical" href="https://lelavoir.re"/>
         <meta name="keywords"
-              content="laundromat Reunion island, laverie Saint-Joseph, laverie automatique, lessive écologique Réunion, laverie Réunion, machines 8kg 14kg 20kg, séchage rapide, laverie 974"/>
+              content="laundromat Reunion island, laverie, laverie Saint-Joseph, laverie automatique, lessive écologique Réunion, laverie Réunion, machines 8kg 14kg 20kg, séchage rapide, laverie 974"/>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -150,11 +136,12 @@ const App = ({ Component, pageProps }: AppProps) => {
           handle: '@toncompte' // optionnel
         }}
       />
-      <Component
+      {isMaintenanceMode ? <SoonPage /> : <Component
         {...pageProps}
         isDarkMode={isDarkMode}
         toggleDarkMode={toggleDarkMode}
-      /></>
+      />}
+      </>
   );
 };
 
