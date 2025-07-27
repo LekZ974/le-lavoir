@@ -86,7 +86,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     });
   });
 
-  if (!isMaintenanceMode) {
+  if (isMaintenanceMode) {
     return (
       <>
         <Head>
