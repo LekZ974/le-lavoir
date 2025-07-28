@@ -8,6 +8,7 @@ import { NextSeo } from 'next-seo';
 import { useEffect } from 'react';
 import { useDarkMode, useEffectOnce } from 'usehooks-ts';
 import SoonPage from '../src/components/SoonPage';
+import { Analytics } from "@vercel/analytics/next"
 
 import i18n from '../src/i18n';
 
@@ -159,6 +160,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         isDarkMode={isDarkMode}
         toggleDarkMode={toggleDarkMode}
       />}
+       <Analytics />
       </>
   );
 };
