@@ -104,7 +104,25 @@ const App = ({ Component, pageProps }: AppProps) => {
         <meta property="og:locale" content="fr_FR"/>
         <link rel="canonical" href="https://lelavoir.re"/>
         <meta name="keywords"
-              content="laundromat Reunion island, laverie, laverie Saint-Joseph, laverie automatique, lessive écologique Réunion, laverie Réunion, machines 8kg 14kg 20kg, séchage rapide, laverie 974"/>
+              content="
+              laundromat Reunion island,
+               laverie,
+                laverie Saint-Joseph,
+                 laverie automatique,
+                  lessive écologique Réunion,
+                   laverie Réunion,
+                    machines 8kg 14kg 20kg,
+                     séchage rapide,
+                      laverie 974,
+                      laverie saint-joseph,
+                       laverie automatique saint-joseph,
+                        laverie 97480,
+                         laverie de raphael babet,
+                          laverie du sud,
+                           machines à laver saint-joseph,
+                            séchoirs saint-joseph,
+                             laverie réunion,
+                              laverie 7 jours sur 7 saint-joseph"/>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
