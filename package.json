@@ -24,8 +24,8 @@
   "devDependencies": {
     "@types/aos": "^3.0.4",
     "@types/node": "18.11.7",
-    "@types/react": "18.0.24",
-    "@types/react-dom": "18.0.8",
+    "@types/react": "^19.1.9",
+    "@types/react-dom": "^19.1.7",
     "aos": "^2.3.4",
     "autoprefixer": "^10.4.13",
     "eslint": "8.26.0",
@@ -35,5 +35,6 @@
     "tailwindcss": "^3.2.1",
     "typescript": "^5.9.2",
     "usehooks-ts": "^2.9.1"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

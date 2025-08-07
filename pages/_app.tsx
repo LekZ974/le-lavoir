@@ -8,7 +8,7 @@ import { NextSeo } from "next-seo";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDarkMode } from "usehooks-ts";
 import SoonPage from "../src/components/SoonPage";
 

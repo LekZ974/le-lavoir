@@ -31,7 +31,7 @@ const Blog = ({
       <main>
         <Section className="container mx-auto px-4 py-48 sm:py-48">
           <div className="text-center">
-            <Title>{t("blog.title")}</Title>
+            <Title size="extra-lg">{t("blog.title")}</Title>
             <Details className="text-extra-light">{t("blog.subtitle")}</Details>
           </div>
           <div className="mt-16 grid gap-8 lg:grid-cols-2 lg:gap-x-5 lg:gap-y-12">

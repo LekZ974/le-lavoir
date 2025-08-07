@@ -1,34 +1,39 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type Options = {
   threshold: number;
   reappear?: boolean;
 };
 
-export const useElementOnScreen = (options: Options): [React.RefObject<HTMLDivElement>, boolean] => {
+export const useElementOnScreen = (
+  options: Options
+): [React.RefObject<HTMLDivElement | null>, boolean] => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   // Définir la callback d'observation avec useCallback pour éviter les recréations
-  const handleIntersect = useCallback((entries: IntersectionObserverEntry[]) => {
-    const [entry] = entries;
-    if (options.reappear) {
-      setIsVisible(entry.isIntersecting);
-    } else {
-      if (entry.isIntersecting) {
-        setIsVisible(true);
+  const handleIntersect = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      const [entry] = entries;
+      if (options.reappear) {
+        setIsVisible(entry.isIntersecting);
+      } else {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
       }
-    }
-  }, [options.reappear]);
+    },
+    [options.reappear]
+  );
 
   useEffect(() => {
     // Si pas de fenêtre (SSR), ne pas créer d'observer
-    if (typeof window === 'undefined' || !containerRef.current) {
+    if (typeof window === "undefined" || !containerRef.current) {
       return;
     }
 
     const observer = new IntersectionObserver(handleIntersect, {
-      threshold: options.threshold
+      threshold: options.threshold,
     });
 
     observer.observe(containerRef.current);
