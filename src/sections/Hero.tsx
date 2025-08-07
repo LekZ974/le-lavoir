@@ -1,14 +1,10 @@
-import { useTranslation } from 'react-i18next';
-import { AnimateOnScroll } from '../components/AnimateOnScroll';
+import { useTranslation } from "next-i18next";
 
-import { ScatteredSpheres } from '../svg/ScatteredSpheres';
-import { Title } from '../components/Title';
-import { Details } from '../components/Details';
-import { Demo } from '../components/Demo';
-import { Section } from '../components/Section';
-import { GradientText } from '../components/GradientText';
-import { WaitlistForm } from '../components/WaitlistForm';
-import Image from 'next/image';
+import { Demo } from "../components/Demo";
+import { Details } from "../components/Details";
+import { GradientText } from "../components/GradientText";
+import { Section } from "../components/Section";
+import { Title } from "../components/Title";
 
 export const Hero = () => {
   const { t } = useTranslation();
@@ -20,18 +16,15 @@ export const Hero = () => {
     >
       {/* Text */}
       <div className="z-10 gap-4 py-28 text-center col md:text-left">
-
         <Title size="extra-lg" className="text-extra-strong">
-          {t('hero.title')}
+          {t("hero.title")}
         </Title>
-        <GradientText>{t('hero.subtitle')}</GradientText>
-        <Details className="text-extra-light">
-          {t('hero.text')}
-        </Details>
+        <GradientText>{t("hero.subtitle")}</GradientText>
+        <Details className="text-extra-light">{t("hero.text")}</Details>
       </div>
       {/* Image */}
       <Demo
-        className={'md:w-[3000px]'}
+        className={"md:w-[3000px]"}
         data-aos="fade-left"
         alt="localisation de la laverie"
       />

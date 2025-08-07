@@ -70,5 +70,8 @@
   "common.modal.error.name": "Renseignez votre nom.",
   "common.modal.error.email": "Renseignez votre email.",
   "common.modal.error.message": "Laissez nous un message.",
-  "common.modal.success": "Merci de nous avoir contacté !"
+  "common.modal.success": "Merci de nous avoir contacté !",
+
+  "blog.title": "Articles",
+  "blog.subtitle": "Retrouvez ici des articles autours de notre laverie et des astuces pour mieux laver votre linge"
 }

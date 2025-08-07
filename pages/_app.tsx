@@ -3,16 +3,15 @@ import "../styles/globals.css";
 
 import { Analytics } from "@vercel/analytics/next";
 import AOS from "aos";
+import { appWithTranslation } from "next-i18next";
 import { NextSeo } from "next-seo";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { useEffect } from "react";
-import { useDarkMode, useEffectOnce } from "usehooks-ts";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useDarkMode } from "usehooks-ts";
 import SoonPage from "../src/components/SoonPage";
 
-import i18n from "../src/i18n";
-
-i18n.init();
 const siteTitle = "Le lavoir de la passerelle";
 const siteDescription =
   "Laverie automatique à Saint-Joseph (974) : machines haute capacité, lessive écolo, séchage rapide. Accueil et services accessibles 7j/7.";
@@ -64,28 +63,46 @@ const jsonLd = {
 
 const App = ({ Component, pageProps }: AppProps) => {
   const { isDarkMode, toggle: toggleDarkMode } = useDarkMode();
+  const [isMounted, setIsMounted] = useState(false);
+  const router = useRouter();
   const isMaintenanceMode = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true";
 
   useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-      document.documentElement.style.setProperty("color-scheme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      document.documentElement.style.setProperty("color-scheme", "light");
-    }
-  }, [isDarkMode]);
+    setIsMounted(true);
+  }, []);
 
-  // Initialize animations
-  useEffectOnce(() => {
-    AOS.init({
-      once: true,
-      // Animations always disabled in dev mode; disabled on phones in prod
-      disable: process.env.NODE_ENV === "development" ? true : "phone",
-      duration: 700,
-      easing: "ease-out-cubic",
-    });
-  });
+  useEffect(() => {
+    if (isMounted) {
+      if (isDarkMode) {
+        document.documentElement.classList.add("dark");
+        document.documentElement.style.setProperty("color-scheme", "dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+        document.documentElement.style.setProperty("color-scheme", "light");
+      }
+    }
+  }, [isDarkMode, isMounted]);
+
+  useEffect(() => {
+    if (isMounted) {
+      AOS.init({
+        once: true,
+        disable: process.env.NODE_ENV === "development" ? true : "phone",
+        duration: 700,
+        easing: "ease-out-cubic",
+      });
+    }
+  }, [isMounted]);
+
+  useEffect(() => {
+    if (isMounted) {
+      AOS.refresh();
+    }
+  }, [isMounted, router.asPath]);
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <>
@@ -161,7 +178,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           handle: "@toncompte", // optionnel
         }}
       />
-      {isMaintenanceMode ? (
+      {isMaintenanceMode && router.pathname !== "/blog" ? (
         <SoonPage />
       ) : (
         <Component
@@ -175,4 +192,4 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
 };
 
-export default App;
+export default appWithTranslation(App);

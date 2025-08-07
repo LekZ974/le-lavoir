@@ -1,20 +1,19 @@
-import { ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
-import { AnimateOnScroll } from '../components/AnimateOnScroll';
+import { useTranslation } from "next-i18next";
+import { ReactNode } from "react";
 
+import { Card } from "../components/Card";
+import { Details } from "../components/Details";
+import { GradientText } from "../components/GradientText";
+import { Section } from "../components/Section";
+import { Title } from "../components/Title";
 import {
   CardsIcon,
-  MagicIcon,
   DoorIcon,
+  MagicIcon,
   ShuffleIcon,
   SignalIcon,
-  TalkingIcon
-} from '../svg/FeatureIcons';
-import { Card } from '../components/Card';
-import { Details } from '../components/Details';
-import { GradientText } from '../components/GradientText';
-import { Section } from '../components/Section';
-import { Title } from '../components/Title';
+  TalkingIcon,
+} from "../svg/FeatureIcons";
 
 const BlockTitle = ({ children }: { children: ReactNode }) => {
   return <h3 className="text-xl font-bold text-strong">{children}</h3>;
@@ -39,62 +38,51 @@ export const FeatureBlocks = () => {
       {/* Header */}
       <div className="gap-4 col">
         <Title size="md">
-          {t('services.title')}<br/>
+          {t("services.title")}
+          <br />
         </Title>
-        <GradientText className="reunion-terracotta">{t('services.subtitle')}</GradientText>
-        <Details>
-          {t('services.text.1') + ' ' + t('services.text.2')}
-        </Details>
+        <GradientText className="reunion-terracotta">
+          {t("services.subtitle")}
+        </GradientText>
+        <Details>{t("services.text.1") + " " + t("services.text.2")}</Details>
       </div>
       {/* Blocks */}
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Block 1 */}
         <Block>
-          <ShuffleIcon/>
-          <BlockTitle>{t('services.capacity.title')}</BlockTitle>
-          <BlockText>
-            {t('services.capacity.text')}
-          </BlockText>
+          <ShuffleIcon />
+          <BlockTitle>{t("services.capacity.title")}</BlockTitle>
+          <BlockText>{t("services.capacity.text")}</BlockText>
         </Block>
         {/* Block 2 */}
         <Block>
-          <SignalIcon/>
-          <BlockTitle>{t('services.drying.title')}</BlockTitle>
-          <BlockText>
-            {t('services.drying.text')}
-          </BlockText>
+          <SignalIcon />
+          <BlockTitle>{t("services.drying.title")}</BlockTitle>
+          <BlockText>{t("services.drying.text")}</BlockText>
         </Block>
         {/* Block 3 */}
         <Block>
-          <TalkingIcon/>
-          <BlockTitle>{t('services.detergent.title')}</BlockTitle>
-          <BlockText>
-            {t('services.detergent.text')}
-          </BlockText>
+          <TalkingIcon />
+          <BlockTitle>{t("services.detergent.title")}</BlockTitle>
+          <BlockText>{t("services.detergent.text")}</BlockText>
         </Block>
         {/* Block 4 */}
         <Block>
-          <DoorIcon/>
-          <BlockTitle>{t('services.snacks.title')}</BlockTitle>
-          <BlockText>
-            {t('services.snacks.text')}
-          </BlockText>
+          <DoorIcon />
+          <BlockTitle>{t("services.snacks.title")}</BlockTitle>
+          <BlockText>{t("services.snacks.text")}</BlockText>
         </Block>
         {/* Block 5 */}
         <Block>
-          <CardsIcon/>
-          <BlockTitle>{t('services.hours.title')}</BlockTitle>
-          <BlockText>
-            {t('services.hours.text')}
-          </BlockText>
+          <CardsIcon />
+          <BlockTitle>{t("services.hours.title")}</BlockTitle>
+          <BlockText>{t("services.hours.text")}</BlockText>
         </Block>
         {/* Block 6 */}
         <Block>
-          <MagicIcon/>
-          <BlockTitle>{t('services.all.title')}</BlockTitle>
-          <BlockText>
-            {t('services.all.text')}
-          </BlockText>
+          <MagicIcon />
+          <BlockTitle>{t("services.all.title")}</BlockTitle>
+          <BlockText>{t("services.all.text")}</BlockText>
         </Block>
       </div>
     </Section>

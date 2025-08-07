@@ -1,7 +1,8 @@
 {
   "hero.title": "Clean laundry",
   "hero.subtitle": "with a little extra connection.",
-  "hero.text": "Here, we wash clothes, but we also weave bonds. A smile, a hello, a conversation over coffee: the bridge is also built between people. Le Lavoir de la Passerelle is positioned as an everyday place—accessible, welcoming, and locally committed. More than a service, it's a meeting point, a moment for yourself or to share, in the heart of Saint-Joseph.",
+  "hero.text1": "Here, we wash clothes, but we also weave bonds. A smile, a hello, a conversation over coffee: the bridge is also built between people.",
+  "hero.text2": "Le Lavoir de la Passerelle is positioned as an everyday place—accessible, welcoming, and locally committed. More than a service, it's a meeting point, a moment for yourself or to share, in the heart of Saint-Joseph.",
 
   "services.title": "Our Services",
   "services.subtitle": "Designed for you",
@@ -70,5 +71,8 @@
   "common.modal.error.name": "Your name is required.",
   "common.modal.error.email": "Your email is required.",
   "common.modal.error.message": "A message is required.",
-  "common.modal.success": "Thank you for your message!"
+  "common.modal.success": "Thank you for your message!",
+
+  "blog.title": "Articles",
+  "blog.subtitle": "Find here articles about our laundromat and tips to better wash your clothes"
 }

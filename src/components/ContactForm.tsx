@@ -1,5 +1,5 @@
-import React, { FormEvent, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "next-i18next";
+import React, { FormEvent, useState } from "react";
 
 interface FormData {
   name: string;
@@ -10,19 +10,21 @@ interface FormData {
 export const ContactForm: React.FC = () => {
   const { t } = useTranslation();
   const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    message: ''
+    name: "",
+    email: "",
+    message: "",
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
 
@@ -30,16 +32,16 @@ export const ContactForm: React.FC = () => {
     let tempErrors: { [key: string]: string } = {};
     let isValid = true;
 
-    if (formData.name.trim() === '') {
-      tempErrors.name = t('common.modal.error.name');
+    if (formData.name.trim() === "") {
+      tempErrors.name = t("common.modal.error.name");
       isValid = false;
     }
-    if (formData.email.trim() === '') {
-      tempErrors.email = t('common.modal.error.email');
+    if (formData.email.trim() === "") {
+      tempErrors.email = t("common.modal.error.email");
       isValid = false;
     }
-    if (formData.message.trim() === '') {
-      tempErrors.message = t('common.modal.error.message');
+    if (formData.message.trim() === "") {
+      tempErrors.message = t("common.modal.error.message");
       isValid = false;
     }
 
@@ -52,24 +54,24 @@ export const ContactForm: React.FC = () => {
     if (validateForm()) {
       setIsSubmitting(true);
       try {
-        const response = await fetch('/api/contact', {
-          method: 'POST',
+        const response = await fetch("/api/contact", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData)
+          body: JSON.stringify(formData),
         });
 
         if (response.ok && response.status === 200) {
           setIsSuccess(true);
-          setFormData({ name: '', email: '', message: '' });
+          setFormData({ name: "", email: "", message: "" });
           setErrors({});
         } else {
           const data = await response.json();
-          throw new Error(data.error || 'Failed to send email');
+          throw new Error(data.error || "Failed to send email");
         }
       } catch (error: any) {
-        console.error('Error sending email:', error);
+        console.error("Error sending email:", error);
         setErrorMessage(error.message);
       } finally {
         setIsSubmitting(false);
@@ -83,10 +85,12 @@ export const ContactForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {isSuccess && <div className="text-gray-100">{t('common.modal.success')}</div>}
+      {isSuccess && (
+        <div className="text-gray-100">{t("common.modal.success")}</div>
+      )}
       <div>
         <label htmlFor="name" className="block text-extra-strong">
-          {t('common.modal.name')}
+          {t("common.modal.name")}
         </label>
         <input
           type="text"
@@ -101,7 +105,7 @@ export const ContactForm: React.FC = () => {
       </div>
       <div>
         <label htmlFor="email" className="block text-extra-strong">
-          {t('common.modal.email')}
+          {t("common.modal.email")}
         </label>
         <input
           type="email"
@@ -116,7 +120,7 @@ export const ContactForm: React.FC = () => {
       </div>
       <div>
         <label htmlFor="message" className="block text-extra-strong">
-          {t('common.modal.message')}
+          {t("common.modal.message")}
         </label>
         <textarea
           id="message"
@@ -126,14 +130,16 @@ export const ContactForm: React.FC = () => {
           placeholder=""
           className="border border-gray-300 p-2 w-full"
         />
-        {errors.message && <div className="text-neon-amber">{errors.message}</div>}
+        {errors.message && (
+          <div className="text-neon-amber">{errors.message}</div>
+        )}
       </div>
       <button
         type="submit"
         disabled={isSubmitting}
         className="bg-blue-500 text-extra-strong p-2 rounded"
       >
-        {isSubmitting ? t('common.modal.sending') : t('common.modal.send')}
+        {isSubmitting ? t("common.modal.sending") : t("common.modal.send")}
       </button>
     </form>
   );

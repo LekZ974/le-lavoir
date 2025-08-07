@@ -1,27 +1,44 @@
-import { FeatureBlocks, Features, Footer, Header, Hero, SocialLinks, Testimonials } from '../src/sections';
-import Brand from '../src/sections/Brand';
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import {
+  FeatureBlocks,
+  Features,
+  Footer,
+  Header,
+  Hero,
+  SocialLinks,
+  Testimonials,
+} from "../src/sections";
+import Brand from "../src/sections/Brand";
 
 const Home = ({
-                isDarkMode,
-                toggleDarkMode
-              }: {
+  isDarkMode,
+  toggleDarkMode,
+}: {
   isDarkMode: boolean;
   toggleDarkMode: () => void;
 }) => {
   return (
     <div className="overflow-hidden col text-strong">
-      <Header isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}/>
+      <Header isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
       <main>
-        <Hero/>
-        <FeatureBlocks/>
-        <Features/>
-        <Testimonials/>
-        <Brand/>
-        <SocialLinks/>
+        <Hero />
+        <FeatureBlocks />
+        <Features />
+        <Testimonials />
+        <Brand />
+        <SocialLinks />
       </main>
-      <Footer/>
+      <Footer />
     </div>
   );
 };
+
+export async function getStaticProps({ locale }: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
+}
 
 export default Home;

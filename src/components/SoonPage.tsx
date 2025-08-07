@@ -1,8 +1,7 @@
 "use client";
-import Image from "next/image";
-import Link from "next/link";
-import { useTranslation } from "react-i18next";
-import { FeatureBlocks, Footer } from "../sections";
+import { useTranslation } from "next-i18next";
+import { FeatureBlocks, Footer, Header } from "../sections";
+import Brand from "../sections/Brand";
 import CardLinks from "./CardLinks";
 import { Demo } from "./Demo";
 import { Details } from "./Details";
@@ -33,27 +32,13 @@ export default function SoonPage() {
 
   return (
     <main>
-      <Section>
-        <div className={"flex justify-center"}>
-          <Link href="/">
-            <div className="relative justify-self-center flex items-center justify-center w-[100px] h-[100px]">
-              <div
-                className="absolute inset-0 rounded-full opacity-100"
-                style={{ zIndex: 1 }}
-              />
-              <Image
-                src="/images/simple-logo.png"
-                alt="Logo"
-                width={80}
-                height={80}
-                className="relative z-10"
-              />
-            </div>
-          </Link>
-        </div>
-        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight bg-clip-text text-extra-light bg-gradient-to-r from-indigo-400 to-pink-500 pb-2">
+      <Header isDarkMode={false} />
+      <Section className="flex flex-col items-center justify-center py-48">
+        <Title size="extra-lg" className="text-extra-strong">
           Ouverture prochainement... Rendez-vous à la rentrée !
-        </h1>
+        </Title>
+      </Section>
+      <Section grayer>
         <video
           className="w-full max-w-lg mx-auto rounded-lg shadow-lg"
           autoPlay
@@ -65,7 +50,7 @@ export default function SoonPage() {
           Votre navigateur ne supporte pas la lecture de vidéos.
         </video>
       </Section>
-      <Section grayer>
+      <Section>
         <div className="z-10 gap-4 py-28 text-center col md:text-left">
           <Title size="extra-lg" className="text-extra-strong">
             {t("hero.title")}
@@ -78,8 +63,9 @@ export default function SoonPage() {
           data-aos="fade-left"
           alt="localisation de la laverie"
         />
-        <FeatureBlocks />
       </Section>
+      <FeatureBlocks />
+      <Brand />
       <Section>
         <CardLinks />
       </Section>

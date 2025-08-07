@@ -1,8 +1,7 @@
 import axios from "axios";
+import { useTranslation } from "next-i18next";
 import { DetailedHTMLProps, FormEvent, HTMLAttributes, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
-
 
 import { Button } from "./Button";
 import { Input } from "./Input";
