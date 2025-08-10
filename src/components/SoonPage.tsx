@@ -52,7 +52,7 @@ export default function SoonPage() {
       </Section>
       <Section>
         <div className="z-10 gap-4 py-28 text-center col md:text-left">
-          <Title size="extra-lg" className="text-extra-strong">
+          <Title size="extra-md" className="text-extra-strong">
             {t("hero.title")}
           </Title>
           <GradientText>{t("hero.subtitle")}</GradientText>

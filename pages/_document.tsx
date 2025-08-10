@@ -1,17 +1,34 @@
-import { Head, Html, Main, NextScript } from "next/document";
+import Document, {
+  Head,
+  Html,
+  Main,
+  NextScript,
+  type DocumentContext,
+} from "next/document";
 import Script from "next/script";
 
-const Document = () => {
-  return (
-    <Html>
-      <Head />
-      <body>
-        <Script strategy="beforeInteractive" src="/scripts/darkModeScript.js" />
-        <Main />
-        <NextScript />
-      </body>
-    </Html>
-  );
-};
+class MyDocument extends Document {
+  static async getInitialProps(ctx: DocumentContext) {
+    const initialProps = await Document.getInitialProps(ctx);
+    return { ...initialProps };
+  }
 
-export default Document;
+  render() {
+    const currentLocale = this.props.locale ?? "fr";
+    return (
+      <Html lang={currentLocale}>
+        <Head />
+        <body>
+          <Script
+            strategy="beforeInteractive"
+            src="/scripts/darkModeScript.js"
+          />
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
+}
+
+export default MyDocument;

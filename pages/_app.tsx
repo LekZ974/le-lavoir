@@ -8,7 +8,7 @@ import { NextSeo } from "next-seo";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDarkMode } from "usehooks-ts";
 import SoonPage from "../src/components/SoonPage";
 
@@ -66,6 +66,38 @@ const App = ({ Component, pageProps }: AppProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
   const isMaintenanceMode = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true";
+  const siteUrl = (
+    process.env.NEXT_PUBLIC_SITE_URL || "https://lelavoir.re"
+  ).replace(/\/$/, "");
+
+  const toOgLocale = (locale: string | undefined) =>
+    locale === "fr" ? "fr_FR" : "en_GB";
+
+  const stripLocaleFromPath = (inputPath: string): string => {
+    const locales = router.locales || [];
+    const defaultLocale = router.defaultLocale || "fr";
+    for (const loc of locales) {
+      if (loc === defaultLocale) continue;
+      if (inputPath === `/${loc}`) return "/";
+      if (inputPath.startsWith(`/${loc}/`))
+        return inputPath.replace(`/${loc}`, "");
+    }
+    return inputPath;
+  };
+
+  const buildLocalizedUrl = (locale: string, path: string): string => {
+    const defaultLocale = router.defaultLocale || "fr";
+    const cleanPath = stripLocaleFromPath(path)
+      .replace(/#.*/, "")
+      .replace(/\?.*/, "");
+    const normalized = cleanPath.startsWith("/") ? cleanPath : `/${cleanPath}`;
+    if (locale === defaultLocale) {
+      return normalized === "/" ? `${siteUrl}/` : `${siteUrl}${normalized}`;
+    }
+    return normalized === "/"
+      ? `${siteUrl}/${locale}`
+      : `${siteUrl}/${locale}${normalized}`;
+  };
 
   useEffect(() => {
     setIsMounted(true);
@@ -121,10 +153,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         />
         <link rel="icon" href="/icons/favicon.ico" />
 
-        <meta property="og:image" content="/images/logo.svg" />
         <meta property="og:type" content="website" />
-        <meta property="og:locale" content="fr_FR" />
-        <link rel="canonical" href="https://lelavoir.re" />
         <meta
           name="keywords"
           content="
@@ -156,22 +185,43 @@ const App = ({ Component, pageProps }: AppProps) => {
         title={siteTitle}
         description={siteDescription}
         themeColor={isDarkMode ? "#18181b" : "#fafafa"}
+        canonical={buildLocalizedUrl(
+          router.locale || router.defaultLocale || "fr",
+          router.asPath
+        )}
         openGraph={{
           type: "website",
-          locale: "fr_FR",
-          url: "https://lelavoir.re",
+          locale: toOgLocale(router.locale || router.defaultLocale),
+          url: buildLocalizedUrl(
+            router.locale || router.defaultLocale || "fr",
+            router.asPath
+          ),
           siteName: siteTitle,
           title: siteTitle,
           description: siteDescription,
           images: [
             {
-              url: "https://lelavoir.re/images/logo-og.jpg", // idéalement une image au format 1200x630
+              url: "https://lelavoir.re/images/landing-page.png", // idéalement une image au format 1200x630
               width: 1200,
               height: 630,
               alt: siteTitle,
             },
           ],
         }}
+        languageAlternates={(router.locales || [router.locale || "fr"])
+          .map((lng) => ({
+            hrefLang: lng,
+            href: buildLocalizedUrl(lng, router.asPath),
+          }))
+          .concat([
+            {
+              hrefLang: "x-default",
+              href: buildLocalizedUrl(
+                router.defaultLocale || "fr",
+                router.asPath
+              ),
+            },
+          ])}
         twitter={{
           cardType: "summary_large_image",
           site: "@toncompte", // optionnel

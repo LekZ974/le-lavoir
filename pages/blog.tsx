@@ -1,6 +1,7 @@
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import React from "react";
+import { NextSeo } from "next-seo";
+import { useRouter } from "next/router";
 import { Details } from "../src/components/Details";
 import { Section } from "../src/components/Section";
 import { Title } from "../src/components/Title";
@@ -25,8 +26,25 @@ const Blog = ({
   toggleDarkMode: () => void;
 }) => {
   const { t } = useTranslation();
+  const router = useRouter();
+  const siteUrl = (
+    process.env.NEXT_PUBLIC_SITE_URL || "https://lelavoir.re"
+  ).replace(/\/$/, "");
+  const canonical = `${siteUrl}${
+    router.locale === (router.defaultLocale || "fr") ? "" : `/${router.locale}`
+  }/blog`;
   return (
     <div className="overflow-hidden col text-strong">
+      <NextSeo
+        title={`Blog — Le lavoir de la passerelle`}
+        description={t("blog.subtitle")}
+        canonical={canonical}
+        openGraph={{
+          url: canonical,
+          title: `Blog — Le lavoir de la passerelle`,
+          description: t("blog.subtitle"),
+        }}
+      />
       <Header isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
       <main>
         <Section className="container mx-auto px-4 py-48 sm:py-48">
