@@ -47,10 +47,7 @@ const TestimonialText = ({
 
 const Testimonial = ({ children }: { children: ReactNode }) => {
   return (
-    <Card
-      grayer
-      className="items-center gap-6 p-12 pt-20 body-lg col text-medium"
-    >
+    <Card grayer className="items-center gap-6 p-12 pt-20  col text-medium">
       {children}
     </Card>
   );
@@ -63,7 +60,7 @@ export const Testimonials = () => {
       {/* Header */}
       <div className="gap-4 col">
         <Title size="extra-md">{t("testimonial.title")}</Title>
-        <Details className="text-extra-light">{t("testimonial.text")}</Details>
+        <Details className=" text-extra-light">{t("testimonial.text")}</Details>
       </div>
       {/* Testimonials */}
       <div className="gap-20 md:gap-6 col md:row">

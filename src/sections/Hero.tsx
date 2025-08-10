@@ -20,7 +20,7 @@ export const Hero = () => {
           {t("hero.title")}
         </Title>
         <GradientText>{t("hero.subtitle")}</GradientText>
-        <Details className="text-extra-light">{t("hero.text")}</Details>
+        <Details className="body-lg text-extra-light">{t("hero.text")}</Details>
       </div>
       {/* Image */}
       <Demo

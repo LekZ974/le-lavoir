@@ -56,7 +56,9 @@ export default function SoonPage() {
             {t("hero.title")}
           </Title>
           <GradientText>{t("hero.subtitle")}</GradientText>
-          <Details className="text-extra-light">{t("hero.text")}</Details>
+          <Details className="body-lg text-extra-light">
+            {t("hero.text")}
+          </Details>
         </div>
         <Demo
           className={"md:w-[3000px]"}

@@ -16,7 +16,7 @@ const CardFeatureText = ({ name, title }: { name?: string; title: string }) => {
     <>
       <div className="items-center">
         <cite className="not-italic text-strong font-bold">{name}</cite>
-        <div className="text-base text-light">{title}</div>
+        <div className="text-light-sm">{title}</div>
       </div>
     </>
   );

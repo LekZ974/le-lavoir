@@ -128,11 +128,19 @@ h1, h2, h3, h4, h5, h6 {
 
     .text-light {
         @apply text-[var(--brand-yellow)];
+        @apply text-lg;
+        @apply dark:text-[#D8E9F1];
+    }
+
+    .text-light-sm {
+        @apply text-[var(--brand-yellow)];
+        @apply text-sm;
         @apply dark:text-[#D8E9F1];
     }
 
     .text-extra-light {
         @apply text-[var(--brand-white)];
+        @apply text-lg;
     }
 
     .text-deep-blue {

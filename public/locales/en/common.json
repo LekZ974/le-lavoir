@@ -1,4 +1,7 @@
 {
+  "common.map.cookies": "To display the Google Maps, we need your consent to load third-party content that may read/write cookies.",
+  "common.map.cookies.accept": "Display the map",
+  "common.map.cookies.redirect": "Open in Google Maps",
   "hero.title": "Clean laundry",
   "hero.subtitle": "with a little extra connection.",
   "hero.text1": "Here, we wash clothes, but we also weave bonds. A smile, a hello, a conversation over coffee: the bridge is also built between people.",
