@@ -67,8 +67,24 @@ export const ContactForm: React.FC = () => {
           setFormData({ name: "", email: "", message: "" });
           setErrors({});
         } else {
-          const data = await response.json();
-          throw new Error(data.error || "Failed to send email");
+          const contentType = response.headers.get("content-type") || "";
+          let errorMessage = "Failed to send email";
+          if (contentType.includes("application/json")) {
+            try {
+              const data = await response.json();
+              errorMessage = data.error || data.message || errorMessage;
+            } catch (_) {
+              // ignore
+            }
+          } else {
+            try {
+              const text = await response.text();
+              errorMessage = text || errorMessage;
+            } catch (_) {
+              // ignore
+            }
+          }
+          throw new Error(errorMessage);
         }
       } catch (error: any) {
         console.error("Error sending email:", error);

@@ -3,22 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { ContactForm } from "../components/ContactForm";
 import { LinkButton } from "../components/LinkButton";
-import { Modal } from "../components/Modal";
 
 export const Footer = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const { pathname } = useRouter();
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
 
   return (
     <footer className="bg-extra-strong">
@@ -45,12 +33,13 @@ export const Footer = () => {
             </Link>
           )}
         </li>
-        <LinkButton onClick={handleOpenModal}>Contactez-nous</LinkButton>
-        <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-          <div className="flex flex-col justify-between h-full">
-            <ContactForm />
-          </div>
-        </Modal>
+        {pathname === "/contact" ? (
+          <Link href="/" className="link text-extra-light">
+            Accueil
+          </Link>
+        ) : (
+          <LinkButton href="/contact">Contactez-nous</LinkButton>
+        )}
       </div>
     </footer>
   );

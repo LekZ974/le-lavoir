@@ -77,5 +77,19 @@
   "common.modal.success": "Thank you for your message!",
 
   "blog.title": "Articles",
-  "blog.subtitle": "Find here articles about our laundromat and tips to better wash your clothes"
+  "blog.subtitle": "Find here articles about our laundromat and tips to better wash your clothes",
+  "portail.title": "Leave us your review and follow us on social media",
+  "portail.facebook": "Facebook",
+  "portail.instagram": "Instagram",
+  "portail.google": "Google Reviews",
+  "portail.home": "Home",
+  "portail.seo.title": "Portal — Le Lavoir de la Passerelle",
+  "portail.seo.description": "Leave us a review and find our links to Facebook, Instagram, Google and the homepage.",
+  "avis.title": "Do you like Le Lavoir de la Passerelle?",
+  "avis.yes": "Yes",
+  "avis.no": "No",
+  "avis.seo.title": "Your review — Le Lavoir de la Passerelle",
+  "avis.seo.description": "Tell us if you like Le Lavoir de la Passerelle. Yes: portal. No: contact.",
+  "contact.seo.title": "Contact — Le Lavoir de la Passerelle",
+  "contact.seo.description": "Send us a message: question, suggestion, or request for information."
 }

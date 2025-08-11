@@ -97,6 +97,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const staticRoutes: string[] = [
     "", // homepage
     "blog",
+    "portail",
+    "avis",
+    "contact",
   ];
 
   const locales: string[] = (i18n?.locales || ["fr", "en"]) as string[];

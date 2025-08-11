@@ -76,5 +76,19 @@
   "common.modal.success": "Merci de nous avoir contacté !",
 
   "blog.title": "Articles",
-  "blog.subtitle": "Retrouvez ici des articles autours de notre laverie et des astuces pour mieux laver votre linge"
+  "blog.subtitle": "Retrouvez ici des articles autours de notre laverie et des astuces pour mieux laver votre linge",
+  "portail.title": "Laissez nous votre avis et suivez-nous sur les réseaux sociaux",
+  "portail.facebook": "Facebook",
+  "portail.instagram": "Instagram",
+  "portail.google": "Avis Google",
+  "portail.home": "Site web",
+  "portail.seo.title": "Portail — Le Lavoir de la Passerelle",
+  "portail.seo.description": "Laissez-nous un avis et retrouvez nos liens Facebook, Instagram, Google, et l’accueil.",
+  "avis.title": "Aimez-vous le Lavoir de la Passerelle ?",
+  "avis.yes": "Oui",
+  "avis.no": "Non",
+  "avis.seo.title": "Votre avis — Le Lavoir de la Passerelle",
+  "avis.seo.description": "Dites-nous si vous aimez le Lavoir de la Passerelle. Oui : portail. Non : contact.",
+  "contact.seo.title": "Contact — Le Lavoir de la Passerelle",
+  "contact.seo.description": "Envoyez-nous un message : question, suggestion, ou demande d’information."
 }
