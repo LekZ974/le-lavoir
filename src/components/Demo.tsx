@@ -41,7 +41,7 @@ export const Demo = (props: DemoProps) => {
             <button
               type="button"
               onClick={() => setIsConsented(true)}
-              className="px-5 py-2 rounded-md bg-primary text-extra-strong hover:opacity-90 transition"
+              className="px-5 py-2 rounded-md bg-primary hover:opacity-90 transition"
             >
               {t("common.map.cookies.accept")}
             </button>

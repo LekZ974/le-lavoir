@@ -112,7 +112,7 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .text-extra-strong {
-        @apply text-[var(--brand-white)];
+        @apply text-[var(--brand-dark-blue)];
         @apply dark:text-[#ffffff];
     }
 
@@ -139,7 +139,8 @@ h1, h2, h3, h4, h5, h6 {
     }
 
     .text-extra-light {
-        @apply text-[var(--brand-white)];
+        @apply text-[var(--brand-dark-blue)];
+        @apply dark:text-[#ffffff];
         @apply text-lg;
     }
 

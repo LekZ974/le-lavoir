@@ -153,7 +153,7 @@ export const ContactForm: React.FC = () => {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="bg-blue-500 text-extra-strong p-2 rounded"
+        className="text-gray-50 font-bold bg-primary-600 rounded-lg hover:bg-primary-700 w-full px-4 py-3 text-center"
       >
         {isSubmitting ? t("common.modal.sending") : t("common.modal.send")}
       </button>

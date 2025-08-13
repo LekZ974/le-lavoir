@@ -6,7 +6,6 @@ import {
   Header,
   Hero,
   SocialLinks,
-  Testimonials,
 } from "../src/sections";
 import Brand from "../src/sections/Brand";
 
@@ -24,7 +23,7 @@ const Home = ({
         <Hero />
         <FeatureBlocks />
         <Features />
-        <Testimonials />
+        {/* <Testimonials /> */}
         <Brand />
         <SocialLinks />
       </main>

@@ -14,7 +14,7 @@ export default function Avis() {
         title={t("avis.seo.title")}
         description={t("avis.seo.description")}
       />
-      <Header isDarkMode={false} />
+      <Header />
       <Section className="flex flex-col items-center justify-center py-48">
         <div className="text-center col items-center">
           <Title size="extra-md" className="text-extra-strong">
