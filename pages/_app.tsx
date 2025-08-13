@@ -176,6 +176,18 @@ const App = ({ Component, pageProps }: AppProps) => {
                              laverie réunion,
                               laverie 7 jours sur 7 saint-joseph"
         />
+        <meta
+          name="facebook-domain-verification"
+          content="hnwmdeubij0uobb9zgdvvwscvpcvk9"
+        />
+        <meta
+          name="facebook-domain-verification"
+          content="n18z4uwyk6vunr5lsqedi166ne74lu"
+        />
+        <meta
+          name="facebook-domain-verification"
+          content="7bj3zcildhfnpxli3wh5nuqdghnug1"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

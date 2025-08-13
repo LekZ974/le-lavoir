@@ -5,6 +5,7 @@ import {
   Footer,
   Header,
   Hero,
+  InstagramFeed,
   SocialLinks,
 } from "../src/sections";
 import Brand from "../src/sections/Brand";
@@ -25,6 +26,7 @@ const Home = ({
         <Features />
         {/* <Testimonials /> */}
         <Brand />
+        <InstagramFeed />
         <SocialLinks />
       </main>
       <Footer />
