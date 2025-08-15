@@ -42,11 +42,21 @@ export const Header = ({
               <ul className="items-center gap-2 row">
                 <li>
                   {pathname === "/blog" ? (
-                    <Link href="/" className="link text-extra-light">
+                    <Link
+                      href="/"
+                      className={`link ${
+                        isScrolled ? "text-light" : "text-extra-light"
+                      }`}
+                    >
                       Accueil
                     </Link>
                   ) : (
-                    <Link href="/blog" className="link text-extra-light">
+                    <Link
+                      href="/blog"
+                      className={`link ${
+                        isScrolled ? "text-light" : "text-extra-light"
+                      }`}
+                    >
                       Blog
                     </Link>
                   )}
