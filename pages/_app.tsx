@@ -240,6 +240,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           handle: "@toncompte", // optionnel
         }}
       />
+      <Analytics />
       {isMaintenanceMode && router.pathname !== "/blog" ? (
         <SoonPage />
       ) : (
@@ -249,7 +250,6 @@ const App = ({ Component, pageProps }: AppProps) => {
           toggleDarkMode={toggleDarkMode}
         />
       )}
-      <Analytics />
     </>
   );
 };
