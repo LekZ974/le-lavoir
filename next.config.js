@@ -5,6 +5,20 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   i18n,
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value:
+              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://assets.vercel.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:;",
+          },
+        ],
+      },
+    ];
+  },
   webpack(config) {
     const fileLoaderRule = config.module.rules.find(
       (rule) => rule.test && rule.test.test && rule.test.test(".svg")
