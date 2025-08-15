@@ -17,7 +17,9 @@ class MyDocument extends Document {
     const currentLocale = this.props.locale ?? "fr";
     return (
       <Html lang={currentLocale}>
-        <Head />
+        <Head>
+          <script defer src="/_vercel/insights/script.js"></script>
+        </Head>
         <body>
           <Script
             strategy="beforeInteractive"
