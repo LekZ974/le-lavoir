@@ -2,6 +2,7 @@ import "aos/dist/aos.css";
 import "../styles/globals.css";
 
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import AOS from "aos";
 import { appWithTranslation } from "next-i18next";
 import { NextSeo } from "next-seo";
@@ -241,6 +242,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         }}
       />
       <Analytics />
+      <SpeedInsights />
       {isMaintenanceMode && router.pathname !== "/blog" ? (
         <SoonPage />
       ) : (
