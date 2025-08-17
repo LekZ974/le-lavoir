@@ -144,6 +144,12 @@ h1, h2, h3, h4, h5, h6 {
         @apply text-lg;
     }
 
+    .text-extra-light-sm {
+        @apply text-[var(--brand-dark-blue)];
+        @apply dark:text-[#ffffff];
+        @apply text-sm;
+    }
+
     .text-deep-blue {
         @apply text-[var(--brand-dark-blue)];
     }

@@ -1,4 +1,7 @@
 {
+  "common.soon": "Opening soon... Follow us on Facebook and Instagram for more information!",
+  "common.header.home": "Home",
+  "common.header.blog": "Blog",
   "common.map.cookies": "To display the Google Maps, we need your consent to load third-party content that may read/write cookies.",
   "common.map.cookies.accept": "Display the map",
   "common.map.cookies.redirect": "Open in Google Maps",

@@ -19,6 +19,7 @@ class MyDocument extends Document {
       <Html lang={currentLocale}>
         <Head>
           <script defer src="/_vercel/insights/script.js"></script>
+          <script defer src="/_vercel/speed-insights/script.js"></script>
         </Head>
         <body>
           <Script

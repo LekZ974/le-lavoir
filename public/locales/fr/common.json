@@ -1,4 +1,7 @@
 {
+  "common.soon": "Ouverture prochainement... Suivez-nous sur Facebook et Instagram pour plus d'informations !",
+  "common.header.home": "Acceuil",
+  "common.header.blog": "Blog",
   "common.map.cookies": "Pour afficher la carte Google Maps, nous avons besoin de votre consentement au chargement de contenus tiers susceptibles de lire/écrire des cookies.",
   "common.map.cookies.accept": "Afficher la carte",
   "common.map.cookies.redirect": "Ouvrir dans Google Maps",
@@ -34,7 +37,7 @@
   "pricing.20kg.text": "Pour les grosses pièces (couettes, tapis, lavages collectifs).",
   "pricing.drying.title": "🌬️ Séchage : 2,00€ les 12mn",
   "pricing.drying.text": "Un linge chaud, moelleux et prêt à plier en toute saison.",
-  "pricing.detergent.title": "Lessive : à partir de 0,50€",
+  "pricing.detergent.title": "Lessive : à partir de 0,70€",
   "pricing.detergent.text": "Douce pour votre linge",
 
   "machines.title": "Nos machines",

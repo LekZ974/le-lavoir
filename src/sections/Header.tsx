@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "../components/LanguageSwitcher";
 import { LinkButton } from "../components/LinkButton";
 import { Logo } from "../components/Logo";
@@ -18,6 +19,7 @@ export const Header = ({
   const [isScrolled, setIsScrolled] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const { pathname } = useRouter();
+  const { t } = useTranslation();
 
   useEffect(() => {
     setIsClient(true);
@@ -36,6 +38,15 @@ export const Header = ({
           isClient && isScrolled ? "bg-strong backdrop-blur-sm shadow-lg" : ""
         }`}
       >
+        <div className="flex">
+          <p
+            className={`${
+              isScrolled ? "text-light-sm" : "text-extra-light-sm"
+            }`}
+          >
+            <a href="#social-links">{t("common.soon")}</a>
+          </p>
+        </div>
         {toggleDarkMode ? (
           <div className="items-center justify-end h-24 px-5 mx-auto row md:h-24 max-w-7xl sm:px-6">
             <nav>
@@ -48,7 +59,7 @@ export const Header = ({
                         isScrolled ? "text-light" : "text-extra-light"
                       }`}
                     >
-                      Accueil
+                      {t("common.header.home")}
                     </Link>
                   ) : (
                     <Link
@@ -57,7 +68,7 @@ export const Header = ({
                         isScrolled ? "text-light" : "text-extra-light"
                       }`}
                     >
-                      Blog
+                      {t("common.header.blog")}
                     </Link>
                   )}
                 </li>
