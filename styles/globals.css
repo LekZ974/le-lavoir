@@ -15,9 +15,11 @@ body {
 
 
 /* Import Tailwind classes */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
 
 /* Make focus ring prettier */
 *:focus {
@@ -148,6 +150,19 @@ h1, h2, h3, h4, h5, h6 {
         @apply text-[var(--brand-dark-blue)];
         @apply dark:text-[#ffffff];
         @apply text-sm;
+    }
+
+    .text-extra-light {
+        @apply text-[var(--brand-dark-blue)];
+        @apply dark:text-[#ffffff];
+        @apply text-lg;
+    }
+
+    .text-white-bold {
+        @apply text-[var(--brand-white)];
+        @apply dark:text-[#ffffff];
+        @apply text-lg;
+        @apply font-bold;
     }
 
     .text-deep-blue {
