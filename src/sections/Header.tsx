@@ -55,15 +55,6 @@ export const Header = ({
           isClient && isScrolled ? "bg-strong backdrop-blur-sm shadow-lg" : ""
         }`}
       >
-        <div className="flex">
-          <p
-            className={`${
-              isScrolled ? "text-light-sm" : "text-extra-light-sm"
-            }`}
-          >
-            <a href="#social-links">{t("common.soon")}</a>
-          </p>
-        </div>
         {toggleDarkMode ? (
           <div className="items-center justify-end h-24 px-5 mx-auto row md:h-24 max-w-7xl sm:px-6">
             {/* Desktop Navigation */}
