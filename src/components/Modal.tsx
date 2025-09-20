@@ -6,9 +6,15 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  title: string;
 }
 
-export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
+export const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  children,
+  title,
+}) => {
   const { t } = useTranslation();
 
   useEffect(() => {
@@ -30,9 +36,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
       <div className="relative min-w-96 mx-auto my-6 pointer-events-none">
         <Card className="p-6 z-50 relative flex flex-col w-full border-0 rounded-lg shadow-lg outline-none pointer-events-auto focus:outline-none">
           <div className="flex justify-between rounded-lg">
-            <h3 className="text-xl font-bold text-extra-strong">
-              Contactez-nous
-            </h3>
+            <h3 className="text-xl font-bold text-extra-strong">{title}</h3>
             <button
               className="text-xl font-semibold leading-none text-gray-50 bg-transparent border-0 outline-none focus:outline-none"
               onClick={onClose}

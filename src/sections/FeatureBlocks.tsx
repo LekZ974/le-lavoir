@@ -1,6 +1,8 @@
 import { useTranslation } from "next-i18next";
 import { ReactNode } from "react";
 
+import { useRouter } from "next/router";
+import { Button } from "../components/Button";
 import { Card } from "../components/Card";
 import { Details } from "../components/Details";
 import { GradientText } from "../components/GradientText";
@@ -33,6 +35,7 @@ const Block = ({ children }: { children: ReactNode }) => {
 
 export const FeatureBlocks = () => {
   const { t } = useTranslation();
+  const router = useRouter();
   return (
     <Section grayer className="gap-16 text-center">
       {/* Header */}
@@ -84,6 +87,11 @@ export const FeatureBlocks = () => {
           <BlockTitle>{t("services.all.title")}</BlockTitle>
           <BlockText>{t("services.all.text")}</BlockText>
         </Block>
+      </div>
+      <div>
+        <Button className="py-8" onClick={() => router.push("/portail")}>
+          {t("services.text.3")}
+        </Button>
       </div>
     </Section>
   );
