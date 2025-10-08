@@ -1,66 +1,44 @@
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { NextSeo } from "next-seo";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
+import { urlFor } from "../sanity/lib/client";
+import { getAllPosts, Post } from "../sanity/lib/queries";
 import { Details } from "../src/components/Details";
 import { Section } from "../src/components/Section";
 import { Title } from "../src/components/Title";
 import { Footer, Header } from "../src/sections";
 
-const articles = [
-  {
-    title: "Foire Aux Questions (FAQ) — Le Lavoir de la Passerelle",
-    description: "",
-    url: "https://medium.com/@alexandre.hoareau/foire-aux-questions-faq-le-lavoir-de-la-passerelle-e6f46c55512d",
-    date: "06 Septembre 2025",
-  },
-  {
-    title:
-      "💡10 astuces pour une lessive plus efficace et économique au Lavoir de la Passerelle",
-    description:
-      "Faire sa lessive, ce n'est pas juste une question de lancer une machine. Avec quelques bonnes habitudes, vous pouvez gagner du temps, économiser de l'argent et mieux entretenir votre linge. Voici nos 10 meilleures astuces à appliquer lors de votre passage au Lavoir de la Passerelle !",
-    url: "https://medium.com/@alexandre.hoareau/10-astuces-pour-une-lessive-plus-efficace-et-économique-au-lavoir-de-la-passerelle-441e15bd0d27",
-    date: "06 Septembre 2025",
-  },
-  {
-    title:
-      "🧺 Bienvenue au Lavoir de la Passerelle : comment fonctionne nos machines à laver ?",
-    description:
-      "Bienvenue au Lavoir de la Passerelle, votre nouvel espace de propreté au cœur de Saint-Joseph ! On vous explique en quelques minutes comment utiliser nos machines à laver. C’est simple, rapide et accessible à tous !",
-    url: "https://medium.com/@alexandre.hoareau/bienvenue-au-lavoir-de-la-passerelle-comment-fonctionne-nos-machines-%C3%A0-laver-65bd1fc32fa5",
-    date: "06 Septembre 2025",
-  },
-  {
-    title: "💨 Séchez votre linge au Lavoir de la Passerelle : mode d’emploi",
-    description:
-      "Après la lessive, place au séchage ! Nos sèche-linges de 17 kg sont puissants, rapides et économiques.",
-    url: "https://medium.com/@alexandre.hoareau/s%C3%A9chez-votre-linge-au-lavoir-de-la-passerelle-mode-demploi-3466330dd717",
-    date: "06 Septembre 2025",
-  },
-  {
-    title:
-      "🧼 Faut-il apporter sa lessive ? Options au Lavoir de la Passerelle",
-    description: "",
-    url: "https://medium.com/@alexandre.hoareau/faut-il-apporter-sa-lessive-options-au-lavoir-de-la-passerelle-359bfd4bb29e",
-    date: "06 Septembre 2025",
-  },
-];
-
 const Blog = ({
   isDarkMode,
   toggleDarkMode,
+  posts,
 }: {
   isDarkMode: boolean;
   toggleDarkMode: () => void;
+  posts: Post[];
 }) => {
   const { t } = useTranslation();
   const router = useRouter();
+  const locale: "fr" | "en" = router.locale === "en" ? "en" : "fr";
   const siteUrl = (
     process.env.NEXT_PUBLIC_SITE_URL || "https://lelavoir.re"
   ).replace(/\/$/, "");
   const canonical = `${siteUrl}${
     router.locale === (router.defaultLocale || "fr") ? "" : `/${router.locale}`
   }/blog`;
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString(locale === "fr" ? "fr-FR" : "en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
   return (
     <div className="overflow-hidden col text-strong">
       <NextSeo
@@ -81,21 +59,42 @@ const Blog = ({
             <Details className="text-extra-light">{t("blog.subtitle")}</Details>
           </div>
           <div className="mt-16 grid gap-8 lg:grid-cols-2 lg:gap-x-5 lg:gap-y-12">
-            {articles.map((article) => (
-              <a key={article.title} href={article.url} className="block group">
+            {posts.map((post) => (
+              <Link
+                key={post._id}
+                href={`/blog/${post.slug.current}`}
+                className="block group"
+              >
                 <div
                   className="p-6 rounded-lg bg-strong shadow-lg hover:shadow-xl transition-shadow duration-300"
                   style={{ height: "100%" }}
                 >
-                  <p className="text-sm text-medium">{article.date}</p>
+                  {post.mainImage && (
+                    <div className="mb-4 relative w-full h-48 rounded-lg overflow-hidden">
+                      <Image
+                        src={urlFor(post.mainImage)
+                          .width(600)
+                          .height(300)
+                          .url()}
+                        alt={post.mainImage.alt?.[locale] || post.title[locale]}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
+                  <p className="text-sm text-medium">
+                    {formatDate(post.publishedAt)}
+                  </p>
                   <p className="text-xl font-semibold text-strong group-hover:text-primary mt-2">
-                    {article.title}
+                    {post.title[locale] || post.title.fr}
                   </p>
-                  <p className="mt-3 text-base text-medium">
-                    {article.description}
-                  </p>
+                  {post.excerpt?.[locale] && (
+                    <p className="mt-3 text-base text-medium">
+                      {post.excerpt[locale]}
+                    </p>
+                  )}
                 </div>
-              </a>
+              </Link>
             ))}
           </div>
         </Section>
@@ -105,10 +104,16 @@ const Blog = ({
   );
 };
 
-export const getStaticProps = async ({ locale }: { locale: string }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ["common"])),
-  },
-});
+export const getStaticProps = async ({ locale }: { locale: string }) => {
+  const posts = await getAllPosts();
+
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+      posts,
+    },
+    revalidate: 60, // Revalidate every 60 seconds
+  };
+};
 
 export default Blog;
