@@ -41,12 +41,12 @@ const Blog = ({
   return (
     <div className="overflow-hidden col text-strong">
       <NextSeo
-        title={`Blog — Le lavoir de la passerelle`}
+        title={t("blog.seo.title")}
         description={t("blog.subtitle")}
         canonical={canonical}
         openGraph={{
           url: canonical,
-          title: `Blog — Le lavoir de la passerelle`,
+          title: t("blog.seo.title"),
           description: t("blog.subtitle"),
         }}
       />

@@ -66,6 +66,9 @@ const App = ({ Component, pageProps }: AppProps) => {
       sameAs: [
         "https://www.facebook.com/profile.php?id=61577023506091",
         "https://www.instagram.com/le_lavoir_de_la_passerelle/",
+        ...(process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_URL?.trim()
+          ? [process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_URL.trim()]
+          : []),
       ],
       description:
         "Laverie automatique moderne à Saint-Joseph (974), ouverte 7j/7. Machines haute capacité, lessive écologique, séchage rapide et service pratique.",
@@ -76,8 +79,9 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   const twitterSite = process.env.NEXT_PUBLIC_TWITTER_SITE?.trim();
 
+  /** EN locale uses en_US for Open Graph (broader default than en_GB). */
   const toOgLocale = (locale: string | undefined) =>
-    locale === "fr" ? "fr_FR" : "en_GB";
+    locale === "fr" ? "fr_FR" : "en_US";
 
   const stripLocaleFromPath = (inputPath: string): string => {
     const locales = router.locales || [];
@@ -163,7 +167,6 @@ const App = ({ Component, pageProps }: AppProps) => {
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="robots" content="index, follow" />
         <meta name="author" content="Le Lavoir de la Passerelle" />
         <meta name="theme-color" content={isDarkMode ? "#18181b" : "#fafafa"} />
 

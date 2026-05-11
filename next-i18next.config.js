@@ -3,6 +3,10 @@ module.exports = {
   i18n: {
     defaultLocale: "fr",
     locales: ["fr", "en"],
+    /**
+     * Disabled so URLs stay stable (/fr/..., /en/...) for SEO and analytics.
+     * Users pick language explicitly via the switcher instead of Accept-Language redirects.
+     */
     localeDetection: false,
   },
   localePath:

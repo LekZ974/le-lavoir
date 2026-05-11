@@ -3,14 +3,18 @@ import type { GetServerSideProps } from "next";
 import { getAllPosts } from "../sanity/lib/queries";
 import { getSiteOrigin } from "../src/constants/site";
 
-// Import i18n configuration to get locales and default locale
-// next-i18next config is CommonJS, so use require to keep it simple in Node.
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { i18n } = require("../next-i18next.config");
 
 type LocaleConfig = {
   locales: string[];
   defaultLocale: string;
+};
+
+type SitemapEntry = {
+  path: string;
+  /** ISO 8601; omit for routes without a reliable freshness signal */
+  lastmod?: string;
 };
 
 function getBaseUrl(req: IncomingMessage): string {
@@ -39,15 +43,19 @@ function buildUrl(
     : `${baseUrl}/${locale}`;
 }
 
+function normalizeLastmod(iso: string): string | undefined {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return undefined;
+  return d.toISOString();
+}
+
 function generateSitemapXml(
   baseUrl: string,
-  routes: string[],
+  entries: SitemapEntry[],
   { locales, defaultLocale }: LocaleConfig
 ): string {
-  const lastmod = new Date().toISOString();
-
-  const urlsXml = routes
-    .map((routePath) => {
+  const urlsXml = entries
+    .map(({ path: routePath, lastmod }) => {
       const locDefault = buildUrl(
         baseUrl,
         routePath,
@@ -68,16 +76,17 @@ function generateSitemapXml(
         defaultLocale
       );
 
-      return [
+      const rows = [
         "  <url>",
         `    <loc>${locDefault}</loc>`,
+        ...(lastmod ? [`    <lastmod>${lastmod}</lastmod>`] : []),
         alternates,
         `    <xhtml:link rel=\"alternate\" hreflang=\"x-default\" href=\"${xDefaultHref}\" />`,
-        `    <lastmod>${lastmod}</lastmod>`,
         "    <changefreq>weekly</changefreq>",
         "    <priority>0.8</priority>",
         "  </url>",
-      ].join("\n");
+      ];
+      return rows.join("\n");
     })
     .join("\n");
 
@@ -95,27 +104,32 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const baseUrl = getBaseUrl(req);
 
   const posts = await getAllPosts();
-  const blogPostRoutes = posts.map((p) => `blog/${p.slug.current}`);
 
-  // List of static routes to include in the sitemap. Add more routes here as needed.
-  // Do not include API routes.
-  const staticRoutes: string[] = [
-    "", // homepage
-    "blog",
-    "portail",
-    "avis",
-    "contact",
-    "mentions-legales",
-    "politique-confidentialite",
-    ...blogPostRoutes,
+  const latestBlogIso = posts.reduce<string | undefined>((best, p) => {
+    const cur = normalizeLastmod(p.publishedAt);
+    if (!cur) return best;
+    if (!best || cur > best) return cur;
+    return best;
+  }, undefined);
+
+  const postEntries: SitemapEntry[] = posts.map((p) => ({
+    path: `blog/${p.slug.current}`,
+    lastmod: normalizeLastmod(p.publishedAt),
+  }));
+
+  /** `/portail` is noindex — excluded from sitemap for crawl consistency */
+  const staticEntries: SitemapEntry[] = [
+    { path: "" },
+    ...(latestBlogIso ? [{ path: "blog", lastmod: latestBlogIso }] : [{ path: "blog" }]),
+    { path: "avis" },
+    { path: "contact" },
+    { path: "mentions-legales" },
+    { path: "politique-confidentialite" },
   ];
 
-  const locales: string[] = (i18n?.locales || ["fr", "en"]) as string[];
-  const defaultLocale: string = (i18n?.defaultLocale || "fr") as string;
-
-  const xml = generateSitemapXml(baseUrl, staticRoutes, {
-    locales,
-    defaultLocale,
+  const xml = generateSitemapXml(baseUrl, [...staticEntries, ...postEntries], {
+    locales: (i18n?.locales || ["fr", "en"]) as string[],
+    defaultLocale: (i18n?.defaultLocale || "fr") as string,
   });
 
   res.setHeader("Content-Type", "application/xml");
