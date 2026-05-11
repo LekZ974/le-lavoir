@@ -28,8 +28,9 @@ const GOOGLE_REVIEWS_URL =
   "https://g.page/r/CTBsKC-8ckR-EBM/review";
 
 const HOME_URL = "/";
-const WIFI_SSID = "Livebox-04A0_wifi_invite";
-const WIFI_PASS = "pNJNzyctF4dNCbA9Fg";
+const WIFI_SSID = process.env.NEXT_PUBLIC_WIFI_SSID?.trim() ?? "";
+const WIFI_PASS = process.env.NEXT_PUBLIC_WIFI_PASSWORD?.trim() ?? "";
+const wifiConfigured = WIFI_SSID.length > 0 && WIFI_PASS.length > 0;
 
 export default function Portail({
   isDarkMode,
@@ -43,8 +44,9 @@ export default function Portail({
       <NextSeo
         title={t("portail.seo.title")}
         description={t("portail.seo.description")}
+        noindex={true}
       />
-      <Header isDarkMode={false} />
+      <Header isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
       <Section className="flex flex-col items-center justify-center py-48">
         <div className="text-center col items-center">
           <Title size="extra-md" className="text-extra-strong">
@@ -97,19 +99,28 @@ export default function Portail({
         title={t("portail.wifi_modal.title")}
       >
         <div className="flex flex-col items-center justify-center text-center">
-          <p className="mb-4">{t("portail.wifi_modal.scan_qr")}</p>
-          <div className="p-4 bg-white rounded-lg">
-            <QRCodeSVG value={`WIFI:T:WPA;S:${WIFI_SSID};P:${WIFI_PASS};;`} />
-          </div>
-          <div className="mt-4">
-            <p>
-              <strong>{t("portail.wifi_modal.network_name")}:</strong>{" "}
-              {WIFI_SSID}
-            </p>
-            <p>
-              <strong>{t("portail.wifi_modal.password")}:</strong> {WIFI_PASS}
-            </p>
-          </div>
+          {wifiConfigured ? (
+            <>
+              <p className="mb-4">{t("portail.wifi_modal.scan_qr")}</p>
+              <div className="p-4 bg-white rounded-lg">
+                <QRCodeSVG
+                  value={`WIFI:T:WPA;S:${WIFI_SSID};P:${WIFI_PASS};;`}
+                />
+              </div>
+              <div className="mt-4">
+                <p>
+                  <strong>{t("portail.wifi_modal.network_name")}:</strong>{" "}
+                  {WIFI_SSID}
+                </p>
+                <p>
+                  <strong>{t("portail.wifi_modal.password")}:</strong>{" "}
+                  {WIFI_PASS}
+                </p>
+              </div>
+            </>
+          ) : (
+            <p className="text-sm">{t("portail.wifi_modal.unconfigured")}</p>
+          )}
         </div>
       </Modal>
     </main>

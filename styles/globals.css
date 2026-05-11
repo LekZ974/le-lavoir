@@ -1,4 +1,3 @@
-/* Import Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Montserrat:wght@700&display=swap');
 
 :root {
@@ -9,10 +8,6 @@
   --brand-yellow: #FBC02D;
 }
 
-body {
-    font-family: 'Nunito', sans-serif;
-}
-
 
 /* Import Tailwind classes */
 @import "tailwindcss/base";
@@ -21,17 +16,24 @@ body {
 
 @import "tailwindcss/utilities";
 
+@layer base {
+  body {
+    font-family: "Nunito", ui-sans-serif, system-ui, sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  }
+}
+
 /* Make focus ring prettier */
 *:focus {
     outline: auto;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Raleway', sans-serif;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
 }
 
 @layer utilities {

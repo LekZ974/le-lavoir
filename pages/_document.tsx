@@ -18,8 +18,12 @@ class MyDocument extends Document {
     return (
       <Html lang={currentLocale}>
         <Head>
-          <script defer src="/_vercel/insights/script.js"></script>
-          <script defer src="/_vercel/speed-insights/script.js"></script>
+          {process.env.VERCEL === "1" ? (
+            <>
+              <script defer src="/_vercel/insights/script.js" />
+              <script defer src="/_vercel/speed-insights/script.js" />
+            </>
+          ) : null}
         </Head>
         <body>
           <Script

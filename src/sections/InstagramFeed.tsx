@@ -24,8 +24,20 @@ export const InstagramFeed = () => {
       setIsLoading(true);
       try {
         const res = await fetch(`/api/instagram?limit=9`);
+        if (!res.ok) {
+          if (isMounted) setItems([]);
+          return;
+        }
         const json = (await res.json()) as { data: Media[] };
-        if (isMounted) setItems(json.data || []);
+        const raw = json.data || [];
+        const usable = raw.filter((item) => {
+          const src =
+            item.media_type === "VIDEO"
+              ? item.thumbnail_url
+              : item.media_url;
+          return Boolean(src);
+        });
+        if (isMounted) setItems(usable);
       } catch {
         if (isMounted) setItems([]);
       } finally {

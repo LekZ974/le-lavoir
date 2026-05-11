@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lelavoir.re/sitemap.xml
+Sitemap: https://www.lelavoir.re/sitemap.xml
 
 

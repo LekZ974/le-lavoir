@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import { Moon, Sun } from "../svg/DarkModeIcons";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { LinkButton } from "./LinkButton";
@@ -19,10 +20,16 @@ export const MobileMenu = ({
   isDarkMode,
   toggleDarkMode,
 }: MobileMenuProps) => {
+  const [mounted, setMounted] = useState(false);
   const { pathname } = useRouter();
   const { t } = useTranslation();
 
-  if (typeof document === "undefined") {
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // SSR + first client render must match (null). Portal only after mount — avoids hydration failure + stuck FOUC (white screen).
+  if (!mounted) {
     return null;
   }
 

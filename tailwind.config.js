@@ -48,6 +48,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ["Avenir Next", "Helvetica Neue", "sans-serif"],
+        heading: ["Montserrat", "Nunito", "sans-serif"],
       },
       scale: {
         '200': '2',

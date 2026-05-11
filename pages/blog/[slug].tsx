@@ -8,6 +8,7 @@ import { getAllPosts, getPostBySlug, Post } from "../../sanity/lib/queries";
 import { PortableText } from "../../src/components/PortableText";
 import { Section } from "../../src/components/Section";
 import { Footer, Header } from "../../src/sections";
+import { getSiteOrigin } from "../../src/constants/site";
 
 interface BlogPostProps {
   isDarkMode: boolean;
@@ -18,9 +19,7 @@ interface BlogPostProps {
 const BlogPost = ({ isDarkMode, toggleDarkMode, post }: BlogPostProps) => {
   const router = useRouter();
   const locale = (router.locale === "en" ? "en" : "fr") as "fr" | "en";
-  const siteUrl = (
-    process.env.NEXT_PUBLIC_SITE_URL || "https://lelavoir.re"
-  ).replace(/\/$/, "");
+  const siteUrl = getSiteOrigin();
   const canonical = `${siteUrl}${
     router.locale === (router.defaultLocale || "fr") ? "" : `/${router.locale}`
   }/blog/${post.slug.current}`;

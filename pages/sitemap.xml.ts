@@ -1,5 +1,7 @@
 import type { IncomingMessage } from "http";
 import type { GetServerSideProps } from "next";
+import { getAllPosts } from "../sanity/lib/queries";
+import { getSiteOrigin } from "../src/constants/site";
 
 // Import i18n configuration to get locales and default locale
 // next-i18next config is CommonJS, so use require to keep it simple in Node.
@@ -19,7 +21,7 @@ function getBaseUrl(req: IncomingMessage): string {
   const host =
     (req.headers["x-forwarded-host"] as string) || (req.headers.host as string);
   if (host) return `${proto}://${host}`.replace(/\/$/, "");
-  return "http://localhost:3000";
+  return getSiteOrigin();
 }
 
 function buildUrl(
@@ -92,6 +94,9 @@ function generateSitemapXml(
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const baseUrl = getBaseUrl(req);
 
+  const posts = await getAllPosts();
+  const blogPostRoutes = posts.map((p) => `blog/${p.slug.current}`);
+
   // List of static routes to include in the sitemap. Add more routes here as needed.
   // Do not include API routes.
   const staticRoutes: string[] = [
@@ -100,6 +105,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     "portail",
     "avis",
     "contact",
+    "mentions-legales",
+    "politique-confidentialite",
+    ...blogPostRoutes,
   ];
 
   const locales: string[] = (i18n?.locales || ["fr", "en"]) as string[];

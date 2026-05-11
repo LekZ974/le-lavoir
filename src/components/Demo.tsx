@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useTranslation } from "next-i18next";
 import { DetailedHTMLProps, HTMLAttributes, useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -38,6 +39,14 @@ export const Demo = (props: DemoProps) => {
           </div>
           <div className="z-10 text-center p-6 max-w-md">
             <p className="mb-4 text-medium">{t("common.map.cookies")}</p>
+            <p className="mb-4 text-sm text-medium">
+              <Link
+                href="/politique-confidentialite"
+                className="underline text-primary"
+              >
+                {t("footer.privacy")}
+              </Link>
+            </p>
             <button
               type="button"
               onClick={() => setIsConsented(true)}

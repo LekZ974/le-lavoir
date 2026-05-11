@@ -10,6 +10,7 @@ import { Details } from "../src/components/Details";
 import { Section } from "../src/components/Section";
 import { Title } from "../src/components/Title";
 import { Footer, Header } from "../src/sections";
+import { getSiteOrigin } from "../src/constants/site";
 
 const Blog = ({
   isDarkMode,
@@ -23,9 +24,7 @@ const Blog = ({
   const { t } = useTranslation();
   const router = useRouter();
   const locale: "fr" | "en" = router.locale === "en" ? "en" : "fr";
-  const siteUrl = (
-    process.env.NEXT_PUBLIC_SITE_URL || "https://lelavoir.re"
-  ).replace(/\/$/, "");
+  const siteUrl = getSiteOrigin();
   const canonical = `${siteUrl}${
     router.locale === (router.defaultLocale || "fr") ? "" : `/${router.locale}`
   }/blog`;

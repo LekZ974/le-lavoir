@@ -7,67 +7,74 @@ import { NextSeo } from "next-seo";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useDarkMode } from "usehooks-ts";
 import SoonPage from "../src/components/SoonPage";
+import { getBusinessPhone, getSiteOrigin } from "../src/constants/site";
 
 const siteTitle = "Le lavoir de la passerelle";
 const siteDescription =
   "Laverie automatique à Saint-Joseph (974) : machines haute capacité, lessive écolo, séchage rapide. Accueil et services accessibles 7j/7.";
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Laundromat",
-  name: "Le Lavoir de la Passerelle",
-  "@id": "https://lelavoir.re",
-  url: "https://lelavoir.re",
-  image: "https://lelavoir.re/images/logo-og.jpg",
-  telephone: "+262 692000000",
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "5c rue Amiral Lacaze",
-    addressLocality: "Saint-Joseph",
-    postalCode: "97480",
-    addressCountry: "RE",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: -21.3763,
-    longitude: 55.6152,
-  },
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-      ],
-      opens: "06:00",
-      closes: "22:00",
-    },
-  ],
-  sameAs: [
-    "https://www.facebook.com/tonlavoir",
-    "https://www.instagram.com/tonlavoir",
-  ],
-  description:
-    "Laverie automatique moderne à Saint-Joseph (974), ouverte 7j/7. Machines haute capacité, lessive écologique, séchage rapide et service pratique.",
-  paymentAccepted: ["Cash", "Credit Card", "Mobile Payment"],
-};
-
 const App = ({ Component, pageProps }: AppProps) => {
-  const { isDarkMode, toggle: toggleDarkMode } = useDarkMode();
-  const [isMounted, setIsMounted] = useState(false);
+  const { isDarkMode, toggle: toggleDarkMode } = useDarkMode({
+    // SSR + first client paint must match to avoid hydration errors; real value loads after mount.
+    initializeWithValue: false,
+  });
   const router = useRouter();
   const isMaintenanceMode = process.env.NEXT_PUBLIC_MAINTENANCE_MODE === "true";
-  const siteUrl = (
-    process.env.NEXT_PUBLIC_SITE_URL || "https://lelavoir.re"
-  ).replace(/\/$/, "");
+  const siteUrl = getSiteOrigin();
+  const businessPhone = getBusinessPhone();
+
+  const jsonLd = useMemo(
+    () => ({
+      "@context": "https://schema.org",
+      "@type": "Laundromat",
+      name: "Le Lavoir de la Passerelle",
+      "@id": `${siteUrl}/#localbusiness`,
+      url: siteUrl,
+      image: `${siteUrl}/images/landing-page.png`,
+      ...(businessPhone ? { telephone: businessPhone } : {}),
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "5c rue Amiral Lacaze",
+        addressLocality: "Saint-Joseph",
+        postalCode: "97480",
+        addressCountry: "RE",
+      },
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: -21.3763,
+        longitude: 55.6152,
+      },
+      openingHoursSpecification: [
+        {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday",
+          ],
+          opens: "06:00",
+          closes: "22:00",
+        },
+      ],
+      sameAs: [
+        "https://www.facebook.com/profile.php?id=61577023506091",
+        "https://www.instagram.com/le_lavoir_de_la_passerelle/",
+      ],
+      description:
+        "Laverie automatique moderne à Saint-Joseph (974), ouverte 7j/7. Machines haute capacité, lessive écologique, séchage rapide et service pratique.",
+      paymentAccepted: ["Cash", "Credit Card", "Mobile Payment"],
+    }),
+    [businessPhone, siteUrl]
+  );
+
+  const twitterSite = process.env.NEXT_PUBLIC_TWITTER_SITE?.trim();
 
   const toOgLocale = (locale: string | undefined) =>
     locale === "fr" ? "fr_FR" : "en_GB";
@@ -98,42 +105,57 @@ const App = ({ Component, pageProps }: AppProps) => {
       : `${siteUrl}/${locale}${normalized}`;
   };
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const hasSyncedThemeAfterHydration = useRef(false);
 
+  // Client-only: useEffect avoids SSR warnings from useLayoutEffect. Initial paint is handled by darkModeScript.js (beforeInteractive).
   useEffect(() => {
-    if (isMounted) {
-      if (isDarkMode) {
+    try {
+      const key = "usehooks-ts-dark-mode";
+      const raw = window.localStorage.getItem(key);
+      let dark = false;
+      if (raw !== null) {
+        dark = JSON.parse(raw) as boolean;
+      } else {
+        dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      }
+      if (dark) {
         document.documentElement.classList.add("dark");
         document.documentElement.style.setProperty("color-scheme", "dark");
       } else {
         document.documentElement.classList.remove("dark");
         document.documentElement.style.setProperty("color-scheme", "light");
       }
+    } catch {
+      /* keep classes set by darkModeScript.js */
     }
-  }, [isDarkMode, isMounted]);
+  }, []);
 
   useEffect(() => {
-    if (isMounted) {
-      AOS.init({
-        once: true,
-        disable: process.env.NODE_ENV === "development" ? true : "phone",
-        duration: 700,
-        easing: "ease-out-cubic",
-      });
+    if (!hasSyncedThemeAfterHydration.current) {
+      hasSyncedThemeAfterHydration.current = true;
+      return;
     }
-  }, [isMounted]);
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+      document.documentElement.style.setProperty("color-scheme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      document.documentElement.style.setProperty("color-scheme", "light");
+    }
+  }, [isDarkMode]);
 
   useEffect(() => {
-    if (isMounted) {
-      AOS.refresh();
-    }
-  }, [isMounted, router.asPath]);
+    AOS.init({
+      once: true,
+      disable: process.env.NODE_ENV === "development" ? true : "phone",
+      duration: 700,
+      easing: "ease-out-cubic",
+    });
+  }, []);
 
-  if (!isMounted) {
-    return null;
-  }
+  useEffect(() => {
+    AOS.refresh();
+  }, [router.asPath]);
 
   return (
     <>
@@ -153,28 +175,6 @@ const App = ({ Component, pageProps }: AppProps) => {
         <link rel="icon" href="/icons/favicon.ico" />
 
         <meta property="og:type" content="website" />
-        <meta
-          name="keywords"
-          content="
-              laundromat Reunion island,
-               laverie,
-                laverie Saint-Joseph,
-                 laverie automatique,
-                  lessive écologique Réunion,
-                   laverie Réunion,
-                    machines 8kg 14kg 20kg,
-                     séchage rapide,
-                      laverie 974,
-                      laverie saint-joseph,
-                       laverie automatique saint-joseph,
-                        laverie 97480,
-                         laverie de raphael babet,
-                          laverie du sud,
-                           machines à laver saint-joseph,
-                            séchoirs saint-joseph,
-                             laverie réunion,
-                              laverie 7 jours sur 7 saint-joseph"
-        />
         <meta
           name="facebook-domain-verification"
           content="hnwmdeubij0uobb9zgdvvwscvpcvk9"
@@ -212,7 +212,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           description: siteDescription,
           images: [
             {
-              url: "https://lelavoir.re/images/landing-page.png", // idéalement une image au format 1200x630
+              url: `${siteUrl}/images/landing-page.png`,
               width: 1200,
               height: 630,
               alt: siteTitle,
@@ -233,11 +233,15 @@ const App = ({ Component, pageProps }: AppProps) => {
               ),
             },
           ])}
-        twitter={{
-          cardType: "summary_large_image",
-          site: "@toncompte", // optionnel
-          handle: "@toncompte", // optionnel
-        }}
+        {...(twitterSite
+          ? {
+              twitter: {
+                cardType: "summary_large_image" as const,
+                site: twitterSite,
+                handle: twitterSite,
+              },
+            }
+          : {})}
       />
       {isMaintenanceMode && router.pathname !== "/blog" ? (
         <SoonPage />

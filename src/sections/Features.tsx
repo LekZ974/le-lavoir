@@ -34,7 +34,7 @@ const CardFeature = ({
       grayer
       className={twMerge(
         "items-center gap-6 p-12 pt-20 body-lg col text-medium",
-        className
+        className,
       )}
     >
       {children}
@@ -71,7 +71,7 @@ const FeatureDemo = (
     center?: boolean;
     className: string;
     alt: string;
-  }
+  },
 ) => {
   const { webmSrc, mp4Src, bumpLeft, center, alt, className, ...divProps } =
     props;
@@ -82,7 +82,7 @@ const FeatureDemo = (
         `w-5/6 md:w-1/2 p-4 md:p-12 bg-gradient-to-br rounded-xl ${
           center ? "" : bumpLeft ? "md:-translate-x-14" : "md:translate-x-14"
         }`,
-        className
+        className,
       )}
     >
       <Demo

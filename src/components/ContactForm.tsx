@@ -1,11 +1,19 @@
 import { useTranslation } from "next-i18next";
 import React, { FormEvent, useState } from "react";
+import {
+  CONTACT_MAX_MESSAGE_LEN,
+  CONTACT_MAX_NAME_LEN,
+} from "../constants/contact";
 
 interface FormData {
   name: string;
   email: string;
   message: string;
+  website: string;
 }
+
+const EMAIL_RE =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
 export const ContactForm: React.FC = () => {
   const { t } = useTranslation();
@@ -13,6 +21,7 @@ export const ContactForm: React.FC = () => {
     name: "",
     email: "",
     message: "",
+    website: "",
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -22,6 +31,7 @@ export const ContactForm: React.FC = () => {
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
+    if (errorMessage) setErrorMessage(null);
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
@@ -29,19 +39,37 @@ export const ContactForm: React.FC = () => {
   };
 
   const validateForm = () => {
-    let tempErrors: { [key: string]: string } = {};
+    const tempErrors: { [key: string]: string } = {};
     let isValid = true;
 
-    if (formData.name.trim() === "") {
+    const nameTrim = formData.name.trim();
+    if (nameTrim === "") {
       tempErrors.name = t("common.modal.error.name");
+      isValid = false;
+    } else if (nameTrim.length > CONTACT_MAX_NAME_LEN) {
+      tempErrors.name = t("common.modal.error.name_too_long", {
+        max: CONTACT_MAX_NAME_LEN,
+      });
       isValid = false;
     }
     if (formData.email.trim() === "") {
       tempErrors.email = t("common.modal.error.email");
       isValid = false;
+    } else if (
+      formData.email.length > 254 ||
+      !EMAIL_RE.test(formData.email.trim())
+    ) {
+      tempErrors.email = t("common.modal.error.email_format");
+      isValid = false;
     }
-    if (formData.message.trim() === "") {
+    const messageTrim = formData.message.trim();
+    if (messageTrim === "") {
       tempErrors.message = t("common.modal.error.message");
+      isValid = false;
+    } else if (messageTrim.length > CONTACT_MAX_MESSAGE_LEN) {
+      tempErrors.message = t("common.modal.error.message_too_long", {
+        max: CONTACT_MAX_MESSAGE_LEN,
+      });
       isValid = false;
     }
 
@@ -59,51 +87,78 @@ export const ContactForm: React.FC = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+            website: formData.website,
+          }),
         });
 
         if (response.ok && response.status === 200) {
           setIsSuccess(true);
-          setFormData({ name: "", email: "", message: "" });
+          setFormData({
+            name: "",
+            email: "",
+            message: "",
+            website: "",
+          });
           setErrors({});
         } else {
           const contentType = response.headers.get("content-type") || "";
-          let errorMessage = "Failed to send email";
+          let msg = "Failed to send email";
           if (contentType.includes("application/json")) {
             try {
               const data = await response.json();
-              errorMessage = data.error || data.message || errorMessage;
+              msg = data.error || data.message || msg;
             } catch (_) {
               // ignore
             }
           } else {
             try {
               const text = await response.text();
-              errorMessage = text || errorMessage;
+              msg = text || msg;
             } catch (_) {
               // ignore
             }
           }
-          throw new Error(errorMessage);
+          throw new Error(msg);
         }
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error("Error sending email:", error);
-        setErrorMessage(error.message);
+        const raw =
+          error instanceof Error ? error.message : t("common.modal.error");
+        const msg =
+          raw === "Payload too large"
+            ? t("common.modal.error.payload_too_large")
+            : raw;
+        setErrorMessage(msg);
       } finally {
         setIsSubmitting(false);
       }
     }
   };
 
-  if (errorMessage) {
-    return <div className="text-neon-amber">{errorMessage}</div>;
-  }
-
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {errorMessage && (
+        <div className="text-neon-amber" role="alert">
+          {errorMessage}
+        </div>
+      )}
       {isSuccess && (
         <div className="text-gray-100">{t("common.modal.success")}</div>
       )}
+      <input
+        type="text"
+        name="website"
+        value={formData.website}
+        onChange={handleChange}
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute left-[-9999px] h-0 w-0 overflow-hidden opacity-0"
+      />
       <div>
         <label htmlFor="name" className="block text-extra-strong">
           {t("common.modal.name")}
@@ -114,6 +169,7 @@ export const ContactForm: React.FC = () => {
           name="name"
           value={formData.name}
           onChange={handleChange}
+          maxLength={CONTACT_MAX_NAME_LEN}
           placeholder=""
           className="border border-gray-300 p-2 w-full"
         />
@@ -143,6 +199,7 @@ export const ContactForm: React.FC = () => {
           name="message"
           value={formData.message}
           onChange={handleChange}
+          maxLength={CONTACT_MAX_MESSAGE_LEN}
           placeholder=""
           className="border border-gray-300 p-2 w-full"
         />

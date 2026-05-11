@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 import { LanguageSwitcher } from "../components/LanguageSwitcher";
 import { LinkButton } from "../components/LinkButton";
 import { Logo } from "../components/Logo";

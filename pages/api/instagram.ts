@@ -16,10 +16,51 @@ type InstagramResponse = {
   error?: { message: string };
 };
 
+const RATE_WINDOW_MS = 60_000;
+const RATE_MAX = 40;
+const rateBuckets = new Map<string, number[]>();
+
+function getClientIp(req: NextApiRequest): string {
+  const xf = req.headers["x-forwarded-for"];
+  if (typeof xf === "string") {
+    const first = xf.split(",")[0]?.trim();
+    if (first) return first;
+  }
+  if (Array.isArray(xf) && xf[0]) return xf[0];
+  return req.socket?.remoteAddress || "unknown";
+}
+
+function allowRate(ip: string): boolean {
+  const now = Date.now();
+  const prev = (rateBuckets.get(ip) || []).filter(
+    (t) => now - t < RATE_WINDOW_MS
+  );
+  if (prev.length >= RATE_MAX) return false;
+  prev.push(now);
+  rateBuckets.set(ip, prev);
+  return true;
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<InstagramResponse>
 ) {
+  if (req.method !== "GET") {
+    res.setHeader("Allow", ["GET"]);
+    return res.status(405).json({
+      data: [],
+      error: { message: "Method Not Allowed" },
+    });
+  }
+
+  if (!allowRate(getClientIp(req))) {
+    res.setHeader("Retry-After", "60");
+    return res.status(429).json({
+      data: [],
+      error: { message: "Too many requests" },
+    });
+  }
+
   const accessToken = process.env.INSTAGRAM_ACCESS_TOKEN;
   const limitParam = Array.isArray(req.query.limit)
     ? req.query.limit[0]
@@ -27,7 +68,6 @@ export default async function handler(
   const limit = Math.max(1, Math.min(Number(limitParam) || 9, 24));
 
   if (!accessToken) {
-    // No token configured: return empty feed gracefully
     return res.status(200).json({ data: [] });
   }
 
@@ -53,6 +93,10 @@ export default async function handler(
       return res.status(200).json({ data: [], error: { message: text } });
     }
     const json = (await response.json()) as { data?: InstagramMedia[] };
+    res.setHeader(
+      "Cache-Control",
+      "public, s-maxage=300, stale-while-revalidate=600"
+    );
     return res.status(200).json({ data: json.data || [] });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Unknown error";
